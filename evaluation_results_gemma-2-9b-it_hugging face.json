@@ -1,0 +1,371 @@
+[
+  {
+    "index": 0,
+    "prompt": "If my future wife has the same first name as the 15th first lady of the United States' mother and her surname is the same as the second assassinated president's mother's maiden name, what is my future wife's name? ",
+    "ground_truth": "Jane Ballou",
+    "llm_response": "Here's how to solve this riddle:\n\n* **15th First Lady:** The 15th First Lady was Harriet Lane, who served as hostess for her uncle, President James Buchanan.\n* **Harriet Lane's Mother:** Harriet Lane's mother's name was also **Harriet Lane**,  pronounced Lar-nee.\n* **Second Assassinated President:** The second assassinated president was James A. Garfield.\n* **James Garfield's Mother's Maiden Name:** James Garfield's mother's maiden name was **Eliza**\n\nTherefore, your future wife's name is **Eliza Lane**. \n\n\n",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "No. \n\nThe model made a mistake by incorrectly identifying James A. Garfield's mother's maiden name as \"Eliza\".  The correct information is needed to solve the riddle. \n\n\nLet me know if you'd like to try another riddle! \n",
+    "reasoning_type": "Multiple constraints"
+  },
+  {
+    "index": 1,
+    "prompt": "Imagine there is a building called Bronte tower whose height in feet is the same number as the dewey decimal classification for the Charlotte Bronte book that was published in 1847. Where would this building rank among tallest buildings in New York City, as of August 2024?",
+    "ground_truth": "37th",
+    "llm_response": "Here's how we can solve this:\n\n1. **Identify Charlotte Bront\u00eb's 1847 book:** According to her Wikipedia page, Charlotte Bront\u00eb's most famous work, *Jane Eyre*, was published in 1847.\n\n2. **Find the Dewey Decimal Classification for *Jane Eyre*:**  While a precise Dewey Decimal Classification isn't given on its Wikipedia page, we can infer it likely falls under the \"Fiction\" category, which starts around 800. It would likely be further categorized by nationality (British fiction) and then sub-categorized by time period or genre.\n\n3. **Estimate the building height:**  Since we don't have the exact Dewey Decimal Classification, we can estimate that the building would be somewhere between 800 and 900 feet tall. \n\n4. **Compare to New York City's tallest buildings:**  You'll need to consult the Wikipedia article on \"List of tallest buildings in New York City\" to see where a building of estimated height 800-900 feet would rank.  \n\n\nLet me know if you have trouble finding the specific ranking on the Wikipedia page! \n",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "No. \n\nHere's why:\n\n* **Dewey Decimal Relevance:**  The model correctly identifies *Jane Eyre* and its likely Dewey Decimal range (800s). However, the model focuses too heavily on estimating a precise height based on this.  The Dewey Decimal classification is a broad organizational system, not a direct measurement of height.\n\n* **Ignoring the Question's Intent:** The question is designed to be a bit of a trick. It wants you to think about the connection between the book, its classification, and building height, but ultimately doesn't require a precise calculation. \n\n* **Wikipedia as a Resource:** The model correctly suggests using the Wikipedia list of tallest NYC buildings.  \n\n\n**A better response would have:**\n\n1. **Highlighted the connection:** Acknowledged that the question's premise is a literary/classification puzzle rather than a strict mathematical one.\n2. **Suggested a ballpark:**  While not precise, mentioning that 800-900 feet is a reasonable  tall building, not exceptionally so.\n3. **Finished with the ranking:**  Without calculating the exact height, stated that a building of that general height would likely fall somewhere in the middle or lower-middle rankings of NYC skyscrapers.\n",
+    "reasoning_type": "Numerical reasoning | Tabular reasoning | Multiple constraints"
+  },
+  {
+    "index": 2,
+    "prompt": "How many years earlier would Punxsutawney Phil have to be canonically alive to have made a Groundhog Day prediction in the same state as the US capitol?",
+    "ground_truth": "87",
+    "llm_response": "This is a bit of a trick question! \n\n* **Punxsutawney Phil** is a groundhog who lives in Pennsylvania. \n* The **United States Capitol** is located in Washington, D.C.\n\nPennsylvania and Washington, D.C. are in different states.  Therefore, Punxsutawney Phil has never made a Groundhog Day prediction in the same state as the US Capitol.  \n\n\nTo answer your question about how many years earlier Phil would have to be alive -  it's impossible to say!  We don't know how long Phil has been making predictions, and we're talking about hypothetical time travel. \n",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "No.\n\nThe model is correct that Punxsutawney Phil lives in Pennsylvania and the US Capitol is in Washington, D.C., making it impossible for him to have made a prediction there.  \n\nHowever, the question is asking about a hypothetical scenario where Phil *could* have existed in Washington, D.C.  The answer \"87\" likely refers to the number of years ago that Washington, D.C. became the capital of the United States. \n\n\nLet me know if you'd like to explore other hypothetical scenarios! \n",
+    "reasoning_type": "Numerical reasoning | Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 3,
+    "prompt": "As of August 1, 2024, which country were holders of the FIFA World Cup the last time the UEFA Champions League was won by a club from London?",
+    "ground_truth": "France",
+    "llm_response": "Here's how to figure this out:\n\n1. **Find the date of the last UEFA Champions League win by a London club:** You'll need to check the UEFA Champions League Wikipedia article for a list of winners and the years they won. \n\n2. **Find the FIFA World Cup holder for that year:**  Once you know the year of the last London club win, go to the FIFA World Cup Wikipedia article and look up the winner for that year.\n\n\nLet me know if you need help finding the specific dates on the Wikipedia pages! \n",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "Yes.\n\nThe model's response is correct because it provides a logical and effective method to find the answer. \n\nHere's why:\n\n* **Identifies the Key Information:** It correctly points out that you need to determine the year the last London club won the Champions League and then find the FIFA World Cup winner for that year.\n* **Provides Reliable Resources:** It suggests using the UEFA Champions League and FIFA World Cup Wikipedia pages, which are reliable sources for this information. \n* **Offers Assistance:** It offers help with finding specific dates on the Wikipedia pages, showing a willingness to guide the user. \n\n\nLet me know if you want to try another example! \n\n",
+    "reasoning_type": "Tabular reasoning | Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 4,
+    "prompt": "What is the name of the vocalist from the first band to make it in the top 200 under the record label that produced the third studio album for Dismal Euphony?",
+    "ground_truth": "Jens Kidman",
+    "llm_response": "Here's how to find the answer to this complex query:\n\n1. **Identify the record label:**  You'll need to look at the Wikipedia article for Dismal Euphony and find the label that produced its third studio album.\n\n2. **Find bands on that label:** Once you have the label, you'll need to find a list of bands they represent.  Nuclear Blast is a good place to start as it's mentioned in the Wikipedia articles.\n\n3. **Locate top 200 bands:**  See if you can find information about the most successful bands on that label (possibly on their website or by searching for \"top Nuclear Blast bands\").\n\n4. **Find the vocalist:** Determine which of those bands is the first to have reached the top 200 and then look for the vocalist's name.\n\n\n\n\nLet me know if you have trouble finding a specific piece of information from the articles, and I can try to help you locate it. \n",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "No. \n\nThe model's approach, while logical, doesn't guarantee the correct answer.  It relies on finding specific information like a list of the label's top 200 bands, which may not be readily available.  \n\nFurthermore, the model doesn't consider the possibility that the first band to make the top 200 under the label might *not be* the one that released Dismal Euphony's third album.  The question isn't asking about the label associated with Dismal Euphony's third album; it's asking about the label associated with the *first* band to hit the top 200.\n\n\nThe model needs to be more specific and avoid making assumptions about readily available data. \n\n",
+    "reasoning_type": "Multiple constraints"
+  },
+  {
+    "index": 5,
+    "prompt": "According to the 2000 United States census, what was the 2000 population of the birth city of the only 21st-century mayor of Austin, Texas who also served as mayor in the 1990s? Round your answer to the nearest thousand.",
+    "ground_truth": "506000",
+    "llm_response": "Here's how to solve this query:\n\n1. **Identify the mayor:** The query asks for the birth city population of the only 21st-century mayor of Austin who also served in the 1990s. According to the Wikipedia article on the Mayor of Austin, Kirk Watson fits this description.\n\n2. **Find Watson's birth city:** The Kirk Watson Wikipedia article states he was born in Oklahoma City, Oklahoma.\n\n3. **Get Oklahoma City's 2000 population:**  We can find this information on the Oklahoma City Wikipedia article. According to the article, the population of Oklahoma City in 2000 was 506,133.\n\n4. **Round to the nearest thousand:** Rounding 506,133 to the nearest thousand gives us **506,000**.\n\n\n\n\n**Therefore, the answer is 506,000.** \n",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "Yes \n\nThe model correctly identified Kirk Watson as the only 21st-century mayor of Austin who also served in the 1990s, found his birth city as Oklahoma City, and accurately retrieved the 2000 population from Wikipedia. The rounding to the nearest thousand was also performed correctly. \n\n\n",
+    "reasoning_type": "Numerical reasoning | Tabular reasoning | Multiple constraints"
+  },
+  {
+    "index": 6,
+    "prompt": "I have an element in mind and would like you to identify the person it was named after. Here's a clue: The element's atomic number is 9 higher than that of an element discovered by the scientist who discovered Zirconium in the same year.",
+    "ground_truth": "Mendelevium is named after Dmitri Mendeleev.",
+    "llm_response": "Here's how we can solve this:\n\n* **Zirconium:**  According to the Wikipedia article, Zirconium was discovered by **Martin Heinrich Klaproth** in 1789.\n* **Atomic Number:**  Zirconium has an atomic number of 40.\n* **Element 9 Higher:** An element 9 higher than Zirconium (atomic number 40) would have an atomic number of 49. \n* **Element with Atomic Number 49:** This element is **Indium**.\n\n\nUnfortunately, the provided Wikipedia articles don't state who discovered Indium. \n\n**To find the answer to who Indium was named after, you'd need to consult the Wikipedia article for Indium.** \n",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "No. \n\nThe model made a mistake in identifying the element 9 places higher than Zirconium.  \n\n* While it correctly identifies Indium (atomic number 49),  it incorrectly claims that Indium was discovered in the same year as Zirconium by the same scientist. \n\n*  Indium was discovered in 1863 by Ferdinand Reich and Theodor Richter, *not* Martin Heinrich Klaproth. \n\n\nThe model should have continued its search for the element with the atomic number 9 higher than Zirconium (atomic number 40)\n\nLet me know if I can help you with anything else! \n\n",
+    "reasoning_type": "Numerical reasoning | Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 7,
+    "prompt": "As of Aug 3, 2024, the artist who released the album \"Father of Asahd\" went to the same high school as an Olympic diver. How many Olympic teams did this diver participate on?",
+    "ground_truth": "2",
+    "llm_response": "Here's how we can solve this:\n\n1. **Identify the artist:** The album \"Father of Asahd\" was released by DJ Khaled.\n\n2. **Find DJ Khaled's high school:** According to his Wikipedia page, DJ Khaled attended Dr. Phillips High School.\n\n3. **Find the Olympic diver from Dr. Phillips High School:**  Mark Ruiz, an Olympic diver, also attended Dr. Phillips High School.\n\n4. **Determine Mark Ruiz's Olympic participation:** Mark Ruiz's Wikipedia page states he participated on **two** Olympic teams.\n\n\n\n\n**Therefore, the answer is 2.** \n",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "Yes. \n\nThe model's response is correct because it accurately:\n\n* **Identified DJ Khaled as the artist** behind the album \"Father of Asahd\".\n* **Found DJ Khaled's high school**, which was Dr. Phillips High School.\n* **Identified Mark Ruiz as an Olympic diver** who also attended Dr. Phillips High School.\n* **Verified Mark Ruiz's Olympic team participation** through his Wikipedia page, correctly stating he was on two Olympic teams. \n\n\nThe model followed a logical process and used reliable sources to arrive at the correct answer.  \n",
+    "reasoning_type": "Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 8,
+    "prompt": "A general motors vehicle is named after the largest ward in the country of Monaco.  How many people had walked on the moon as of the first model year of the vehicle? Note: the model year is not the same as the year the model was first produced.",
+    "ground_truth": "4",
+    "llm_response": "Here's how we can solve this:\n\n1. **Identify the vehicle:** The clue tells us the vehicle is a General Motors product named after Monaco's largest ward.  This points to the Chevrolet Monte Carlo.\n\n2. **Find the first model year:**  The Wikipedia article for the Chevrolet Monte Carlo states the first model year was 1970.\n\n3. **Apollo missions and moon landings:** The Wikipedia articles on Apollo missions and the Moon detail the history of these missions.  We need to know how many astronauts walked on the moon *before* 1970.\n\n   * Apollo 11 landed on the Moon in July 1969. That mission had three astronauts (Armstrong, Aldrin, and Collins). \n   *  Apollo 12, 14, 15, and 16 also landed on the moon before 1970, with a total of eight more astronauts.\n\n4. **Calculate the total:**  In total, **11** astronauts had walked on the moon by 1970. \n\n\n\nLet me know if you'd like to explore any of these topics further! \n",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "No. \n\nThe model incorrectly states that 11 astronauts had walked on the moon by 1970. Here's the breakdown:\n\n* Only Apollo 11 landed on the moon before 1970. \n* Apollo 11 had **two** astronauts walk on the moon (Neil Armstrong and Buzz Aldrin). \n\n\nLet me know if you'd like to explore this further! \n",
+    "reasoning_type": "Tabular reasoning | Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 9,
+    "prompt": "The Pope born Pietro Barbo ended a long-running war two years after his papacy began, which famous conflict, immortalized in tapestry took place 400 years earlier?",
+    "ground_truth": "The Battle of Hastings.",
+    "llm_response": "The answer to your query is the **Battle of Hastings**. \n\nHere's why:\n\n* **Pope Paul II**  (born Pietro Barbo) ended the **Thirteen Years' War** two years after his papacy began. This war took place from 1454 to 1466.\n* The **Bayeux Tapestry**, famous for depicting the events leading up to and including the Battle of Hastings, took place in 1066. This would make it roughly 400 years earlier than the Thirteen Years' War. \n\n\nLet me know if you have any other historical riddles! \n",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Temporal reasoning"
+  },
+  {
+    "index": 10,
+    "prompt": "An Australian artist, born the same year as artist Janet Cumbrae Stewart and fellow member of the Melbourne Society of Women Painters and Sculptors, had her painting featured on the cover of Women's World Magazine in 1923. What is the name of the painting?",
+    "ground_truth": "Reve d'Or",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 11,
+    "prompt": "As of July 1, 2024, what is the parent company of the current record label of the singer of Edge of Seventeen?",
+    "ground_truth": "Warner Music Group",
+    "llm_response": "",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "Yes. \n\n**Reasoning:**\n\n* **Singer of \"Edge of Seventeen\":** Stevie Nicks\n* **Stevie Nicks' current record label:**  Elektra Records\n* **Parent company of Elektra Records:** Warner Music Group \n\nTherefore, the model's answer is correct. \n",
+    "reasoning_type": "Tabular reasoning | Multiple constraints"
+  },
+  {
+    "index": 12,
+    "prompt": "The Basibasy mine is located in Madagascar. This mine is abundant in a specific chemical element that was discovered for the first time in 1791. The person who discovered this element was born on what is now known as a major US holiday - what holiday is this?",
+    "ground_truth": "Christmas",
+    "llm_response": "Here's the solution:\n\n1. **Basibasy mine:** The Wikipedia article states it's located in Madagascar and is rich in titanium.\n\n2. **Titanium discovery:** The Titanium article says it was discovered in 1791 by William Gregor.\n\n3. **William Gregor's birthday:**  A search for William Gregor's birthday reveals his birthdate was  December 25th, which is Christmas. \n\n\n\n\n**Answer:** The holiday is **Christmas**.  \n",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "Yes\n\nThe model's response is correct.  \n\nHere's why:\n\n* **Accurate Information:** The model correctly identifies the Basibasy mine as being rich in titanium and that titanium was discovered in 1791 by William Gregor.\n* **Birthday Connection:**  William Gregor was indeed born on December 25th, which is Christmas. \n* **Logical Reasoning:** The model follows a clear line of reasoning: \n    1. Identifies the mine and its key element.\n    2. Traces the discovery of that element.\n    3. Connects the discoverer's birthday to a known holiday. \n\n\nLet me know if you have any other questions!\n",
+    "reasoning_type": "Multiple constraints"
+  },
+  {
+    "index": 13,
+    "prompt": "One of Barbara Kingsolver's best known novels is about an American missionary family which moves to Africa. At the time, the country they move to was a Belgian colony. Which year did it become independent?",
+    "ground_truth": "1960",
+    "llm_response": "According to the Wikipedia article on the **Belgian Congo**, it gained independence in **1960**. \n\n\nThis aligns with the information about **The Poisonwood Bible** by Barbara Kingsolver, which depicts an American missionary family's experiences in the Congo **before** its independence.  \n",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "Yes. \n\nThe model correctly identifies the novel as \"The Poisonwood Bible\", and accurately states that the Belgian Congo gained independence in 1960. This timeline aligns with the novel's setting and plot.  \n",
+    "reasoning_type": "Multiple constraints"
+  },
+  {
+    "index": 14,
+    "prompt": "Which football player got 15 or more assists in La Liga during the 2010-2011 season and also played for Arsenal at one point in his career?",
+    "ground_truth": "This was Mesut Ozil.",
+    "llm_response": "The answer is **Mesut \u00d6zil**. \n\nHere's why:\n\n* **Mesut \u00d6zil** played for Real Madrid during the 2010-2011 season and had a standout performance with 17 assists in La Liga that year. \n* He later transferred to **Arsenal** in 2013. \n\n\nLet me know if you have any other questions. \n",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "Yes.\n\nThe model correctly identifies Mesut \u00d6zil as the player who met both criteria:\n\n* **15+ assists in La Liga 2010-2011:** \u00d6zil had 17 assists for Real Madrid that season.\n* **Played for Arsenal:** \u00d6zil joined Arsenal in 2013. \n\n\n\n",
+    "reasoning_type": "Numerical reasoning | Tabular reasoning | Multiple constraints"
+  },
+  {
+    "index": 15,
+    "prompt": "In Slovakia there is a well known Film Festival called the Bratistlava International Film Festival. What city/ town was the film editor for the Grand Prix winner of 2003 born in?",
+    "ground_truth": "Roudnice nad Labem",
+    "llm_response": " unfortunately, the provided Wikipedia articles don't contain the answer to your question.  \n\n* **Bratislava International Film Festival:** This page gives information about the festival itself, but not details about the winners or their birthplaces.\n* **Boredom in Brno, Ji\u0159\u00ed Bro\u017eek, and Roudnice nad Labem:** These articles are about different topics and don't relate to the Bratislava International Film Festival or its 2003 Grand Prix winner. \n\n\nTo find the answer to your question, you would need to consult additional sources, such as:\n\n* **The festival's archives:** The official website or archives of the Bratislava International Film Festival might list information about past winners, including the birthplace of the film editor.\n* **Film databases:** Websites like IMDb or film encyclopedias often include biographical information about filmmakers.\n* **News articles:** Searching for news coverage of the 2003 festival might mention the film editor and their background. \n\n",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "No. \n\nThe model correctly identifies the lack of information in the provided Wikipedia articles. However, it fails to recognize that the answer to the question is actually present in one of the articles it lists: \"Boredom in Brno, Ji\u0159\u00ed Bro\u017eek, and Roudnice nad Labem\".  \n\nThis article is about the 2003 Grand Prix winner of the Bratislava International Film Festival, \"Boredom in Brno\", directed by Ji\u0159\u00ed Bro\u017eek, who was born in Roudnice nad Labem. \n\n\nTherefore, the model's response is incomplete as it doesn't utilize the information available within the linked articles. \n",
+    "reasoning_type": "Tabular reasoning | Multiple constraints"
+  },
+  {
+    "index": 16,
+    "prompt": "On March 7th, 2012, the director James Cameron explored a very deep underseas trench.  As of August 3, 2024, how many times would the tallest building in San Francisco fit end to end from the bottom of the New Britain Trench to the surface of the ocean? The answer should be a rounded-off whole number.   ",
+    "ground_truth": "28",
+    "llm_response": "Here's how we can solve this:\n\n1. **Deepest point:** According to the Solomon Sea article, the deepest point in the New Britain Trench is approximately 8,047 meters (26,300 feet).\n\n2. **Tallest building in San Francisco:**  We need to find the height of the tallest building in San Francisco from the Wikipedia list. As of August 3, 2024, the tallest building is Salesforce Tower at 326 meters (1,070 feet).\n\n3. **Conversion:** To make the calculations easier, let's convert everything to meters:\n    - Trench depth: 8,047 meters\n    - Building height: 326 meters\n\n4. **Division:** Divide the trench depth by the building height: 8,047 meters / 326 meters = 24.7\n\n5. **Rounding:** Round the result to the nearest whole number: 25\n\n\n\n\n**Answer:** The tallest building in San Francisco would fit approximately **25** times end to end from the bottom of the New Britain Trench to the surface. \n",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "No. \n\nThe model used the correct process but appears to have made a rounding error somewhere.  \n\nHere's the breakdown:\n\n* **Depth of Trench:** 8,047 meters\n* **Height of Salesforce Tower:** 326 meters\n\n* **Calculation:** 8,047 meters / 326 meters = 24.72 (approximately)\n\n* **Rounded Answer:**  Rounding 24.72 to the nearest whole number is **25**.  \n\n\n\n\nThe recruiter is asking for the rounded answer, so the model's response is technically correct.  \n\n",
+    "reasoning_type": "Numerical reasoning | Tabular reasoning | Post processing | Temporal reasoning"
+  },
+  {
+    "index": 17,
+    "prompt": "In August of 2024, what is the first name of the mayor of the U.S. state capital city who attended the same university as at least one U.S. president and whose city is home to an outgoing or former full member of the Big 12 Conference",
+    "ground_truth": "Leirion",
+    "llm_response": "Here's how we can solve this:\n\n1. **Identify the relevant Wikipedia article:**  We need information about mayors, U.S. presidents, universities, and the Big 12 Conference. The article \"Big 12 Conference\" is particularly relevant.\n\n2. **Big 12 Teams:** The Big 12 Conference website would list its current (outing or former) members.\n\n3. **State Capitals with Big 12 Teams:** We would need to see which state capitals have universities associated with a current or former Big 12 member. \n\n4. **Mayors:** Look up the mayors of those state capitals.\n\n5. **University Connection:**  See if those mayors attended the same university as any U.S. presidents.\n\n    \n\nUnfortunately, I cannot directly access and process information from external websites like Wikipedia. I am a text-based AI and lack the capability to browse the internet. \n\n\nLet me know if you have any other questions that don't require real-time web searches! \n",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "No. \n\nHere's why:\n\n* **The model correctly identifies the strategy.**  The steps outlined are logical and would lead to the solution if the AI could actually access the necessary information.\n* **The model acknowledges its limitations.**  It explicitly states that it cannot access external websites, which is a crucial point.\n\n**However:**\n\nThe model fails to provide the actual answer, even though it is presented with the correct answer during the follow-up.  A more helpful response would have been to say something like:\n\n\"While I can't access the web to find the answer, if you were able to identify the state capitals with Big 12 teams, the mayors of those cities, and their universities, you could then cross-reference that information with a list of U.S. presidents and their alma maters to find the solution.\" \n\n\nLet me know if you'd like to explore this puzzle further! \n",
+    "reasoning_type": "Multiple constraints"
+  },
+  {
+    "index": 18,
+    "prompt": "How many years after the founding of the 50th most populous US city, based on 2023 estimate population data, did Frank Fox receive UK Patent (1344259)?",
+    "ground_truth": "98 Years (Arlington, TX & Rubik's Cube)",
+    "llm_response": "Here's how we can figure this out:\n\n1. **Find the 50th most populous US city:** We need to visit the Wikipedia article \"List of United States cities by population\" and look at the 2023 estimates to find the 50th city.\n\n2. **Find the founding date:**  Once we know the city, we need to find its founding date from its Wikipedia article (likely \"Arlington, Texas\").\n\n3. **Find the patent date:** We need the date Frank Fox received UK Patent (1344259) from a reliable source.  It might be mentioned on his Wikipedia page if he has one, or we might need to search patent databases.\n\n4. **Calculate the difference:** Subtract the founding date of the city from the patent date to find the number of years.\n\n\nLet me know if you need help with any of these steps, once you've located the necessary information! \n\n",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "No. \n\nWhile the model's approach is logically sound, it's missing a crucial piece of information: **Frank Fox's patent (1344259) is related to the Rubik's Cube**.  The model assumes the patent date is related to the city's founding date, which is incorrect.  \n",
+    "reasoning_type": "Numerical reasoning | Tabular reasoning | Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 19,
+    "prompt": "As of August 4, 2024, in what state was the first secretary of the latest United States federal executive department born?",
+    "ground_truth": "Pennsylvania",
+    "llm_response": "According to the provided Wikipedia articles, the latest United States federal executive department is the Department of Homeland Security, established in 2002.  \n\nThe first Secretary of Homeland Security was Tom Ridge. Tom Ridge was born in **Pennsylvania**. \n\n\nLet me know if you have any other questions.\n",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "Yes\n\nThe model correctly identifies the Department of Homeland Security as the latest federal executive department and accurately states that Tom Ridge was the first Secretary. It further correctly notes that Tom Ridge was born in Pennsylvania.  \n",
+    "reasoning_type": "Tabular reasoning | Multiple constraints"
+  },
+  {
+    "index": 20,
+    "prompt": "As of August 1 2024, what is the most recently described genus of Colosteidae?",
+    "ground_truth": "Deltaherpeton, first described in 2010",
+    "llm_response": "I cannot access real-time information, including updates to Wikipedia articles. Therefore, I cannot provide the most recently described genus of Colosteidae as of August 1, 2024. \n\nTo find this information, you would need to consult the latest version of the Wikipedia articles you provided or a specialized scientific database. \n\n",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "Yes.\n\nThe model's response is correct.  It explicitly states that it cannot access real-time information, including updates to databases like Wikipedia.   Since scientific discoveries are constantly being made, relying on a static knowledge base like a language model's training data would not guarantee the most up-to-date information. \n\nTo find the most recently described genus of Colosteidae, one would need to consult a current, authoritative scientific source. \n",
+    "reasoning_type": "Tabular reasoning | Temporal reasoning"
+  },
+  {
+    "index": 21,
+    "prompt": "Ma\u0142gorzata Ro\u017cniecka is a model who won the title of Miss International. What is the difference in title years from when she won and the pageant winner who was murdered by her stalker?",
+    "ground_truth": "10 years",
+    "llm_response": "Here's the breakdown:\n\n* **Ma\u0142gorzata Ro\u017cniecka won Miss International in 1988.**  \n* **Agnieszka Kotlarska, who was murdered by her stalker, won Miss International in 1991.**\n\nThe difference in title years is **3 years** (1991 - 1988 = 3). \n\n\nLet me know if you have any other questions. \n",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Numerical reasoning | Tabular reasoning"
+  },
+  {
+    "index": 22,
+    "prompt": "According to the 1990 United States census, what was the total population of the cities in Oklahoma that had at least 100,000 residents according to the 2020 United States census?",
+    "ground_truth": "950135",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Numerical reasoning | Tabular reasoning | Multiple constraints"
+  },
+  {
+    "index": 23,
+    "prompt": "What was the political party of the person who advocated for the type of government used in Chikhali, Latur district to become the foundation of India's political system?",
+    "ground_truth": "Indian National Congress",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Tabular reasoning | Multiple constraints"
+  },
+  {
+    "index": 24,
+    "prompt": "Giorgio Rognoni was an Italian professional footballer who played as a midfielder. 10 years after his death who was the midfielder who played in Milan that was born in Besana in Brianza,?",
+    "ground_truth": "Demetrio Albertini",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Numerical reasoning"
+  },
+  {
+    "index": 25,
+    "prompt": "What was the age difference between Mike Tyson and Tyson Fury on the respective days on which they lost their first ever fights? Represent the figure in years only.",
+    "ground_truth": "12 years.",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Numerical reasoning | Post processing"
+  },
+  {
+    "index": 26,
+    "prompt": "Using the Pruett rule, out of all of the blue moons that occurred between the beginning of World War I and the end of World War II, how many of them occurred on the 31st of the month?",
+    "ground_truth": "9",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Numerical reasoning | Tabular reasoning | Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 27,
+    "prompt": "What number would Tommy Lawton have worn playing for Chelsea FC?",
+    "ground_truth": "9",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Temporal reasoning"
+  },
+  {
+    "index": 28,
+    "prompt": "If you subtract the year that William McCrary \"Billy\" Ray II was born from the year Obama was first sworn in as President to the United States and multiply it by the number of administrative regions in France as of January 1, 2024, what number would you get?",
+    "ground_truth": "828",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Numerical reasoning"
+  },
+  {
+    "index": 29,
+    "prompt": "If Princess Diana had been born three years earlier, who would have been Prime Minister when she was ten? ",
+    "ground_truth": "Harold Wilson",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Numerical reasoning | Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 30,
+    "prompt": "As of August 1, 2024, what is the population of the writer of the \"Culdcept Saga\"'s birthplace? Write the answer to the nearest million, in characters.",
+    "ground_truth": "Two million.",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Numerical reasoning | Multiple constraints | Post processing"
+  },
+  {
+    "index": 31,
+    "prompt": "What is the middle name of the U.S. president who died on the same day of the year as Virginia Woolf?",
+    "ground_truth": "David",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Multiple constraints"
+  },
+  {
+    "index": 32,
+    "prompt": "As of 2010, if you added the number of times Brazil had won the World Cup to the amount of times the Chicago Bulls had won the NBA Championship and multiplied this number by the amount of times the Dallas Cowboys had won the Super Bowl, what number are you left with?",
+    "ground_truth": "55",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Numerical reasoning | Tabular reasoning"
+  },
+  {
+    "index": 33,
+    "prompt": "How old would the founder of the publishing company of the magazine that serialized the manga series Raw Hero have been the year the magazine ended publication?",
+    "ground_truth": "145",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Numerical reasoning | Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 34,
+    "prompt": "The oldest extant football team in Italy plays in a stadium.   The stadium is named after a person.   Who was the emperor of China when that person was 5 years old?",
+    "ground_truth": "Guangxu",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Numerical reasoning | Tabular reasoning | Temporal reasoning"
+  },
+  {
+    "index": 35,
+    "prompt": "Of the four main characters on Seinfeld, which actor is the oldest?",
+    "ground_truth": "Michael Richards",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Numerical reasoning | Multiple constraints"
+  },
+  {
+    "index": 36,
+    "prompt": "How old was Harvard University, when the person whom the longest river in British Columbia is named after, was born?  The river in question only flows within the confines of British Columbia and does not enter any other province or territory.  ",
+    "ground_truth": "140 years old.",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Numerical reasoning | Tabular reasoning | Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 37,
+    "prompt": "On the same day that the The Mercedes-Benz W222 arrived at dealerships, a star of the sit-com Modern Family was wed. Who did the star marry?",
+    "ground_truth": "Justin Mikita",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Multiple constraints"
+  },
+  {
+    "index": 38,
+    "prompt": "Which species from the genus mulona are both found in the same country?",
+    "ground_truth": "Mulona barnesi and mulona schausi",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Multiple constraints"
+  },
+  {
+    "index": 39,
+    "prompt": "As of July 1, 2024, if I wanted to give my daughter the middle name of the American woman who is the most decorated female in the history of American gymnastics as her first name and the full first name of the American woman who holds the world record in the 800-meter freestyle as her middle name, what would I name my daughter? ",
+    "ground_truth": "Arianne Kathleen",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Post processing"
+  },
+  {
+    "index": 40,
+    "prompt": "I am thinking of a Ancient Roman City.  The city was destroyed by volcanic eruption.  The eruption occurred in the year 79 AD.  The volcano was a stratovolcano.    Where was the session held where it was decided that the city would be named a UNESCO world heritage site?",
+    "ground_truth": "Naples",
+    "llm_response": "",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "",
+    "reasoning_type": "Tabular reasoning"
+  }
+]
