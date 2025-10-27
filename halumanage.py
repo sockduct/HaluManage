@@ -7,6 +7,7 @@ For backwards compatibility with direct execution of halumanage.py.
 """
 
 from halumanage import main
+from halumanage.server import main
 
 if __name__ == "__main__":
     main()
