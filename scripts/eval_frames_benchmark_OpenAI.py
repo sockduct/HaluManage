@@ -47,7 +47,7 @@ def get_llm_response(prompt: str, model: str) -> str:
         n=1,
         stop=None,
         temperature=0.7,
-        extra_body={"hulumanage_approach": "readurls&memory"}
+        extra_body={"halumanage_approach": "readurls&memory"}
     )
     return response.choices[0].message.content.strip()
 

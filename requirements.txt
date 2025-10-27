@@ -39,3 +39,4 @@ math_verify
 
 # Added by Avinash
 google-auth     # Required to invoke Google model using LiteLLM. To fix - ModuleNotFoundError: No module named 'google.auth' error
+google-cloud-aiplatform # Required to invoke Google Gemma model using LiteLLM / Vertex AI route.

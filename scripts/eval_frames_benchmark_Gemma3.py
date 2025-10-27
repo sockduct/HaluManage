@@ -9,6 +9,7 @@ from datasets import load_dataset
 from tqdm import tqdm
 from dotenv import load_dotenv
 import litellm
+from typing import Tuple
 
 load_dotenv()  # Load environment variables from .env file
 
@@ -17,34 +18,41 @@ sleep_interval = 5  # seconds
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Set the model name for LiteLLM (Google Cloud AI Platform)
-MODEL_NAME = "gemini-2.5-flash-lite"  # Replace with the correct  model identifier on Google Cloud AI Platform
+MODEL_NAME = "gemini/gemma-3-27b-it"  # The model identifier for Gemma 3 27b on Google Cloud AI Platform
+#MODEL_NAME = "vertex_ai/gemma2-27b-it"  # Correct model identifier for Gemma 2 27b on Vertex AI
 
 # Get Google Cloud API key from environment variable
-GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+# For Vertex AI LiteLLM calls, get project and location from environment variables
+#VERTEX_PROJECT = os.environ.get("VERTEX_PROJECT")
+#VERTEX_LOCATION = os.environ.get("VERTEX_LOCATION")
 
 # Verify that the API key is set
-if not GOOGLE_API_KEY:
-    logging.error("Google Cloud API key not found. Please set the GOOGLE_API_KEY environment variable.")
-    exit()
-
+if not GEMINI_API_KEY:
+    logging.error("GEMINI API key not found. Please set the GEMINI_API_KEY environment variable.")
+    exit() 
+# Verify that the project and location are set
+'''if not VERTEX_PROJECT or not VERTEX_LOCATION:
+    logging.error("VERTEX_PROJECT and VERTEX_LOCATION environment variables must be set for Vertex AI.")
+    exit() '''
 # Function to check if the Google Cloud token is valid by making a simple API call
-def is_google_cloud_token_valid(token):
+def is_vertex_ai_configured():
     try:
         litellm.completion(
             model=MODEL_NAME,  # Use a basic model to test the token
             messages=[{"role": "user", "content": "test"}],
-            api_key=token,
-            provider="google",
+            #vertex_project=VERTEX_PROJECT,
+            #vertex_location=VERTEX_LOCATION,
             timeout=10  # Add a timeout to prevent indefinite hanging
         )
         return True
     except Exception as e:
-        logging.error(f"Google Cloud token validation failed: {e}")
+        logging.error(f"Vertex AI configuration check failed: {e}")
+        logging.error("Ensure you have run 'gcloud auth application-default login' and set the correct project/location.")
         return False
 
-# Validate the Google Cloud token
-if not is_google_cloud_token_valid(GOOGLE_API_KEY):
-    logging.error("Google Cloud API token is invalid. Please check your token and permissions.")
+# Validate the Vertex AI configuration
+if not is_vertex_ai_configured():
     exit()
 
 def load_existing_results(filename: str) -> List[Dict]:
@@ -75,46 +83,49 @@ def count_tokens(text: str, model_name: str) -> int:
         # Fallback to a rough estimate if litellm fails
         return len(text) // 4
 
-def generate_llm_prompt(prompt: str, wiki_links: List[str]) -> str:
+def generate_llm_prompt(prompt: str, wiki_links: List[str]) -> Tuple[str, int]:
     """
     Generates the LLM prompt and counts RAG tokens.
     """
     rag_content = "\n".join(wiki_links)
     rag_tokens = count_tokens(rag_content, MODEL_NAME)
     logging.info(f"RAG tokens: {rag_tokens}")
-    return f"Here are the relevant Wikipedia articles:\n{rag_content}\n\nBased on all the information, answer the query. \n\nQuery: {prompt}\n\n"
+    return f"Here are the relevant Wikipedia articles:\n{rag_content}\n\nBased on all the information, answer the query. \n\nQuery: {prompt}\n\n", rag_tokens
 
-def get_llm_response(prompt: str, model_name: str) -> str:
+def get_llm_response(prompt: str, model_name: str) -> Tuple[str, int, int]:
     """
     Gets the LLM response and counts input and output tokens.
     """
     input_tokens = count_tokens(prompt, model_name)
     logging.info(f"Input tokens: {input_tokens}")
-        
+
     try:
         response = litellm.completion(
             model=model_name,
             messages=[{"role": "user", "content": prompt}],
-            api_key=GOOGLE_API_KEY,  # Explicitly pass the API key
-            provider="google",
+           # api_key=GEMINI_API_KEY,  # Explicitly pass the API key
+           # provider="google",
+            # Pass project and location for Vertex AI
+           # vertex_project=VERTEX_PROJECT,
+           # vertex_location=VERTEX_LOCATION,
             timeout=60  # Add a timeout to prevent indefinite hanging
         )
         output_text = response.choices[0].message.content
         output_tokens = count_tokens(output_text, model_name)
         logging.info(f"Output tokens: {output_tokens}")
-        return output_text
+        return output_text, input_tokens, output_tokens
     except Exception as e:
         logging.error(f"Error getting LLM response: {e}")
-        return ""
+        return "", input_tokens, 0
 
-def evaluate_response(question: str, llm_response: str, ground_truth: str, model_name: str) -> Dict[str, str]:
+def evaluate_response(question: str, llm_response: str, ground_truth: str, model_name: str) -> Tuple[Dict[str, str], int, int]:
     evaluation_prompt = f"""
     Given the question: {question}
     The model responded: {llm_response}
     The correct answer is: {ground_truth}
     Is the model's response correct? Answer with 'Yes' or 'No', and then explain your reasoning.
     """
-    evaluation = get_llm_response(evaluation_prompt, model_name)
+    evaluation, eval_input_tokens, eval_output_tokens = get_llm_response(evaluation_prompt, model_name)
 
     if "Yes" in evaluation:
         decision = "TRUE"
@@ -122,7 +133,7 @@ def evaluate_response(question: str, llm_response: str, ground_truth: str, model
         decision = "FALSE"
 
     explanation = evaluation  # The full response is the explanation
-    return {"decision": decision, "explanation": explanation}
+    return {"decision": decision, "explanation": explanation}, eval_input_tokens, eval_output_tokens
 
 def main(model: str):
     # Load the dataset
@@ -132,14 +143,25 @@ def main(model: str):
     existing_results = load_existing_results(filename)
     last_processed_index = get_last_processed_index(existing_results)
 
+    total_rag_tokens = 0
+    total_input_tokens = 0
+    total_output_tokens = 0
+
     for item in tqdm(dataset, desc="Processing samples"):
         index = int(item['Unnamed: 0'])
         if index <= last_processed_index:
             continue
 
-        prompt = generate_llm_prompt(item['Prompt'], item['wiki_links'])
-        llm_response = get_llm_response(prompt, model)
-        evaluation = evaluate_response(item['Prompt'], llm_response, item['Answer'], model)
+        prompt, rag_tokens = generate_llm_prompt(item['Prompt'], item['wiki_links'])
+        total_rag_tokens += rag_tokens
+
+        llm_response, input_tokens, output_tokens = get_llm_response(prompt, model)
+        total_input_tokens += input_tokens
+        total_output_tokens += output_tokens
+
+        evaluation, eval_input_tokens, eval_output_tokens = evaluate_response(item['Prompt'], llm_response, item['Answer'], model)
+        total_input_tokens += eval_input_tokens
+        total_output_tokens += eval_output_tokens
 
         result = {
             "index": index,
@@ -176,9 +198,15 @@ def main(model: str):
         rt_accuracy = rt_correct / len(rt_samples)
         print(f"Accuracy for {rt}: {rt_accuracy:.2%}")
 
+    # Print total token counts
+    print("\n--- Token Usage Summary ---")
+    print(f"Total RAG tokens: {total_rag_tokens}")
+    print(f"Total input tokens: {total_input_tokens}")
+    print(f"Total output tokens: {total_output_tokens}")
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate LLM performance on google/frames-benchmark")
-    parser.add_argument("--model", type=str, required=True, help="Model to use (e.g., gemini-2.5-flash-lite, gemma-2-27b-it)")
+    parser.add_argument("--model", type=str, default=MODEL_NAME, help=f"Model to use (e.g., {MODEL_NAME})")
     args = parser.parse_args()
 
     main(args.model)
