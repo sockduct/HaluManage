@@ -1,0 +1,34 @@
+Total samples: 824
+Correct answers: 241
+Accuracy: 29.25%
+Accuracy for Numerical reasoning | Tabular reasoning | Multiple constraints: 16.67%
+Accuracy for Numerical reasoning | Multiple constraints: 28.57%
+Accuracy for Numerical reasoning | Tabular reasoning: 21.74%
+Accuracy for Numerical reasoning | Temporal reasoning: 26.67%
+Accuracy for Multiple constraints: 33.21%
+Accuracy for Post processing | Temporal reasoning: 42.86%
+Accuracy for Multiple constraints | Temporal reasoning: 18.18%
+Accuracy for Tabular reasoning | Multiple constraints | Post processing | Temporal reasoning: 0.00%
+Accuracy for Numerical reasoning | Multiple constraints | Post processing | Temporal reasoning: 15.38%
+Accuracy for Tabular reasoning | Post processing: 33.33%
+Accuracy for Tabular reasoning: 46.34%
+Accuracy for Tabular reasoning | Temporal reasoning: 23.53%
+Accuracy for Numerical reasoning | Tabular reasoning | Multiple constraints | Post processing | Temporal reasoning: 15.38%
+Accuracy for Numerical reasoning | Multiple constraints | Temporal reasoning: 25.64%
+Accuracy for Numerical reasoning | Tabular reasoning | Post processing: 0.00%
+Accuracy for Tabular reasoning | Multiple constraints: 16.00%
+Accuracy for Numerical reasoning | Tabular reasoning | Post processing | Temporal reasoning: 0.00%
+Accuracy for Numerical reasoning | Post processing: 26.67%
+Accuracy for Tabular reasoning | Multiple constraints | Post processing: 0.00%
+Accuracy for Multiple constraints | Post processing: 30.77%
+Accuracy for Post processing: 28.57%
+Accuracy for Numerical reasoning | Tabular reasoning | Multiple constraints | Temporal reasoning: 35.29%
+Accuracy for Numerical reasoning | Tabular reasoning | Temporal reasoning: 10.00%
+Accuracy for Numerical reasoning | Post processing | Temporal reasoning: 28.57%
+Accuracy for Numerical reasoning | Tabular reasoning | Multiple constraints | Post processing: 0.00%
+Accuracy for Tabular reasoning | Multiple constraints | Temporal reasoning: 28.57%
+Accuracy for Temporal reasoning: 48.00%
+Accuracy for Numerical reasoning: 31.03%
+Accuracy for Multiple constraints | Post processing | Temporal reasoning: 60.00%
+Accuracy for Numerical reasoning | Multiple constraints | Post processing: 14.29%
+Program execution time: 215.538 seconds
