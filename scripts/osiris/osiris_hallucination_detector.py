@@ -30,7 +30,7 @@ import torch
 import numpy as np
 import warnings
 from pathlib import Path
-from typing import Union, List, Dict, Any, Optional
+from typing import Union, List, Dict, Optional
 from dataclasses import dataclass, asdict, field
 from collections import Counter
 
@@ -104,19 +104,15 @@ class Metrics:
     # Basic statistics
     total_samples: int
     hallucinations_detected: int
-    hallucination_rate: float
+    hallucination_rate: float   # Proportion of samples detected as hallucinations
     
     # Data quality
     samples_with_context: int
     samples_without_context: int
     
     # Classification metrics (when ground truth available)
-    accuracy: Optional[float] = None
-    precision: Optional[float] = None
-    recall: Optional[float] = None
-    f1_score: Optional[float] = None
-    
-    # Confusion matrix
+    accuracy: Optional[float] = None # Number of correct predictions / total predictions
+    precision: Optional[float] = None # Number of true positives / (true positives + false positives)
     true_positives: Optional[int] = None
     false_positives: Optional[int] = None
     true_negatives: Optional[int] = None
@@ -199,7 +195,7 @@ class InputValidator:
 
 def _safe_div(a: float, b: float) -> float:
     """Safe division that returns 0 if denominator is 0"""
-    return a / b if b > 0 else 0.0
+    return a / b if b > 0 else 0.0 # Avoid ZeroDivisionError
 
 # ============================================================================
 # OSIRIS DETECTOR
