@@ -1,0 +1,34 @@
+Model: gpt-4o-mini
+Total samples: 824
+Correct answers: 264
+Accuracy: 32.04%
+Accuracy for Tabular reasoning: 34.15%
+Accuracy for Numerical reasoning: 43.10%
+Accuracy for Numerical reasoning | Post processing | Temporal reasoning: 14.29%
+Accuracy for Numerical reasoning | Tabular reasoning | Multiple constraints | Post processing | Temporal reasoning: 30.77%
+Accuracy for Numerical reasoning | Tabular reasoning | Multiple constraints | Post processing: 0.00%
+Accuracy for Multiple constraints | Post processing | Temporal reasoning: 60.00%
+Accuracy for Numerical reasoning | Tabular reasoning | Temporal reasoning: 40.00%
+Accuracy for Numerical reasoning | Tabular reasoning | Multiple constraints | Temporal reasoning: 35.29%
+Accuracy for Numerical reasoning | Multiple constraints | Temporal reasoning: 23.08%
+Accuracy for Tabular reasoning | Temporal reasoning: 35.29%
+Accuracy for Numerical reasoning | Temporal reasoning: 33.33%
+Accuracy for Tabular reasoning | Multiple constraints | Post processing: 0.00%
+Accuracy for Post processing: 0.00%
+Accuracy for Post processing | Temporal reasoning: 28.57%
+Accuracy for Multiple constraints: 34.34%
+Accuracy for Tabular reasoning | Multiple constraints: 28.00%
+Accuracy for Numerical reasoning | Multiple constraints: 21.43%
+Accuracy for Numerical reasoning | Tabular reasoning | Post processing: 25.00%
+Accuracy for Numerical reasoning | Post processing: 46.67%
+Accuracy for Tabular reasoning | Post processing: 33.33%
+Accuracy for Numerical reasoning | Tabular reasoning | Multiple constraints: 12.50%
+Accuracy for Tabular reasoning | Multiple constraints | Post processing | Temporal reasoning: 0.00%
+Accuracy for Temporal reasoning: 56.00%
+Accuracy for Numerical reasoning | Tabular reasoning | Post processing | Temporal reasoning: 0.00%
+Accuracy for Multiple constraints | Post processing: 23.08%
+Accuracy for Numerical reasoning | Multiple constraints | Post processing: 14.29%
+Accuracy for Multiple constraints | Temporal reasoning: 20.45%
+Accuracy for Numerical reasoning | Multiple constraints | Post processing | Temporal reasoning: 23.08%
+Accuracy for Numerical reasoning | Tabular reasoning: 26.09%
+Accuracy for Tabular reasoning | Multiple constraints | Temporal reasoning: 33.33%
