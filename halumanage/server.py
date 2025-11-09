@@ -99,8 +99,12 @@ def get_config():
         API_KEY = os.environ.get("OPENAI_API_KEY")
         base_url = server_config['base_url']
         if base_url != "":
-            default_client = OpenAI(api_key=API_KEY, base_url=base_url)
-            logger.info(f"Created OpenAI client with base_url: {base_url}")
+            # FIX / Update  -  default_client = OpenAI(api_key=API_KEY, base_url=base_url). This may be requrid for other setup but updated for gpt-40-mini RAG use case.
+            # This is the critical fix: The default client used for internal plugin calls
+            # must always point directly to the provider, not back to the proxy itself.
+            # We create a client that IGNORES the base_url from the server config.
+            default_client = OpenAI(api_key=API_KEY)
+            logger.info(f"Created internal OpenAI client (ignoring proxy base_url: {base_url})")
         else:
             default_client = OpenAI(api_key=API_KEY)
             logger.info("Created OpenAI client without base_url")

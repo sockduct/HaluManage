@@ -11,7 +11,9 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load environment variables from .env file
 
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"), base_url="http://localhost:8000/v1")
+#client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"), base_url="http://localhost:8000/v1")
+# HaluManage proxy will read the API key from environment variable.
+client = OpenAI(api_key="halumanage", base_url="http://localhost:8000/v1")
 # client = OpenAI()
 SLEEP_INTERVAL = 300
 
