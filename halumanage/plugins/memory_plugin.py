@@ -20,7 +20,7 @@ class Memory:
         self.items.append(item)
         self.vectors = None  # Reset vectors to force recalculation
 
-    def get_relevant(self, query: str, n: int = 10) -> List[str]:
+    def get_relevant(self, query: str, question: str, n: int = 10) -> List[str]:
         if not self.items:
             return []
 
@@ -48,6 +48,26 @@ def extract_query(text: str) -> Tuple[str, str]:
             context = text
             query = "What is the main point of this text?"
     return query, context
+
+
+def extract_question_from_eval_prompt(text: str) -> str:
+    """
+    Extracts the question from an evaluation prompt.
+    It checks for two patterns:
+    1. The '===Input Data===' block.
+    2. A 'User:' line followed by a double newline.
+    """
+    # Pattern 1: For evaluation prompts with 'Input Data' block
+    match = re.search(r'-\s*Question:\s*(.*?)(?=\n\s*-\s*Predicted Answer:)', text, re.DOTALL)
+    if match:
+        return match.group(1).strip()
+
+    # Pattern 2: For user prompts ending with a double newline
+    match = re.search(r'User:\s*(.*?)\n\n', text, re.DOTALL)
+    if match:
+        return match.group(1).strip()
+
+    return "" # Return empty string if not found
 
 def classify_margin(margin):
         return margin.startswith("YES#")
@@ -95,8 +115,11 @@ def run(system_prompt: str, initial_query: str, client, model: str) -> Tuple[str
     query, context = extract_query(initial_query)
     completion_tokens = 0
 
+    original_question = extract_question_from_eval_prompt(initial_query)
+
     # Process context and add to memory
     chunk_size = 100000
+    print(f"Total context length: {len(context)} characters.")
     for i in range(0, len(context), chunk_size):
         chunk = context[i:i+chunk_size]
         # print(f"chunk: {chunk}")
@@ -106,9 +129,11 @@ def run(system_prompt: str, initial_query: str, client, model: str) -> Tuple[str
         for info in key_info:
             memory.add(info)
     # print(f"query : {query}")
+
     # Retrieve relevant information from memory
-    relevant_info = memory.get_relevant(query)
-    # print(f"relevant_info : {relevant_info}")
+    relevant_info = memory.get_relevant(query, original_question)
+    print(f"Relevant_info : {relevant_info}")
+
     # Generate response using relevant information
     messages = [
             {"role": "system", "content": system_prompt},
@@ -119,7 +144,7 @@ I asked my assistant to read and analyse the above content page by page to help 
 {relevant_info}
 '''
 Read again the note(s), take a deep breath and answer the query.
-{query}
+{original_question}  // Replaced query with original_question
 """}
     ]
 
@@ -130,5 +155,5 @@ Read again the note(s), take a deep breath and answer the query.
     # print(f"response : {response}")
     final_response = response.choices[0].message.content.strip()
     completion_tokens += response.usage.completion_tokens
-    # print(f"final_response: {final_response}")
+    print(f"Final_response: {final_response}")
     return final_response, completion_tokens
