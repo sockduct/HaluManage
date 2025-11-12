@@ -15,7 +15,6 @@ load_dotenv()  # Load environment variables from .env file
 # HaluManage proxy will read the API key from environment variable.
 client = OpenAI(api_key="halumanage", base_url="http://localhost:8000/v1")
 # client = OpenAI()
-SLEEP_INTERVAL = 300
 
 def load_existing_results(filename: str) -> List[Dict]:
     try:
@@ -129,7 +128,6 @@ def main(model: str):
         
         save_result(filename, result)
         # print(f"Index: {index}, Decision: {result['evaluation_decision']}")
-        # time.sleep(SLEEP_INTERVAL)
 
     # Calculate and print summary statistics
     results = load_existing_results(filename)

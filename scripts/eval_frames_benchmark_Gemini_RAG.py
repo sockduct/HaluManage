@@ -4,6 +4,7 @@ import os
 import time
 from typing import List, Dict
 import logging
+import traceback
 
 from datasets import load_dataset
 from tqdm import tqdm
@@ -87,8 +88,6 @@ def generate_llm_oracle_prompt(prompt: str, wiki_links: List[str]) -> str:
 def get_llm_response(prompt: str, model_name: str, max_tokens: int, temperature: float) -> str:
     try:
         response = litellm.completion(
-            #model=f"litellm_proxy/{model_name}",
-            # model=model_name,  
             model=f"litellm_proxy/{model_name}",
             messages=[ 
                 {"role": "system", "content": "You are a helpful assistant."},
@@ -99,7 +98,7 @@ def get_llm_response(prompt: str, model_name: str, max_tokens: int, temperature:
             n=1,
             stop=None,
             temperature=temperature,
-            #api_key=GOOGLE_API_KEY,
+            api_key="halumanage",
             #provider="google",
             base_url="http://localhost:8000/v1", # Point to your local HaluManage server
             extra_body={"halumanage_approach": "readurls&memory"}
@@ -133,20 +132,45 @@ def evaluate_response(question: str, llm_response: str, ground_truth: str, model
     "Explanation:" (How you made the decision?)
     "Decision:" ("TRUE" or "FALSE" )
     Please proceed with the evaluation."""
-    max_tokens = 300    # Not getting used to compare with baseline with out RAG
-    temperature=0.3
-    evaluation = get_llm_response(evaluation_prompt, model_name, max_tokens, temperature)
+    
+    try:
+        logging.info("Invoking LLM as an evaluator (direct call).")
+        response = litellm.completion(
+            model=f"litellm_proxy/{MODEL_NAME}",  # direct model call to the underlying model
+            messages=[
+                {"role": "system", "content": "You are an expert evaluator."},
+                {"role": "user", "content": evaluation_prompt}
+            ],
+            # A dummy api_key is needed for the proxy.
+            api_key="halumanage",
+            base_url="http://localhost:8000/v1", # Point to your local HaluManage server
+            max_tokens=500,
+            temperature=0.3
+        )
 
-     # Extract the decision and explanation
-    lines = evaluation.split('\n')
-    decision = "FALSE"
-    explanation = ""
-    for line in lines:
-        if line.startswith("Decision:"):
-            decision = line.split(":")[1].strip().upper()
-        elif line.startswith("Explanation:"):
-            explanation = line.split(":", 1)[1].strip()
-    return {"decision": decision, "explanation": explanation}
+        # Safely access response content, works for both object and dict responses
+        evaluation_text = ""
+        if response and hasattr(response, 'choices') and response.choices:
+            if hasattr(response.choices[0], 'message') and hasattr(response.choices[0].message, 'content'):
+                evaluation_text = response.choices[0].message.content.strip()
+
+        if not evaluation_text:
+            logging.error("Could not extract evaluation text from the response.")
+            return {"decision": "ERROR", "explanation": "Empty or invalid response from evaluator."}
+
+        lines = evaluation_text.split('\n')
+        decision = "FALSE"
+        explanation = ""
+        for line in lines:
+            if line.lower().startswith("decision:"):
+                decision = line.split(":", 1)[1].strip().upper()
+            elif line.lower().startswith("explanation:"):
+                explanation = line.partition(":")[2].strip()
+        return {"decision": decision, "explanation": explanation}
+    except Exception as e:
+        logging.error(f"Error during evaluation: {e}")
+        logging.debug(traceback.format_exc())
+        return {"decision": "ERROR", "explanation": str(e)}
 
 def main(model: str):
     # Load the dataset
@@ -172,8 +196,10 @@ def main(model: str):
         logging.info(f"Oracle Prompt Input tokens: {input_tokens}")
         total_input_tokens += input_tokens
         max_tokens = 1000   # Not getting used to compare with baseline with out RAG
-        temperature=0.7
+        temperature=0.3
+
         llm_response = get_llm_response(prompt, model, max_tokens, temperature)
+
         output_tokens = count_tokens(llm_response, MODEL_NAME)
         logging.info(f"Output tokens: {output_tokens}")
         total_output_tokens += output_tokens
