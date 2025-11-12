@@ -1,0 +1,182 @@
+[
+  {
+    "index": 0,
+    "prompt": "If my future wife has the same first name as the 15th first lady of the United States' mother and her surname is the same as the second assassinated president's mother's maiden name, what is my future wife's name? ",
+    "ground_truth": "Jane Ballou",
+    "llm_response": "Based on the information provided, James Buchanan was the **only U.S. president never to have married**. His niece, Harriet Lane, served as his First Lady during his administration.",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "The question asks for the future wife's name, which is \"Jane Ballou\" according to the ground truth. The predicted answer discusses James Buchanan and Harriet Lane, stating that Buchanan was the only U.S. president never to have married. It does not provide the name \"Jane Ballou\" or any name for the future wife. The predicted answer completely misses the core question and the ground truth.",
+    "reasoning_type": "Multiple constraints"
+  },
+  {
+    "index": 1,
+    "prompt": "Imagine there is a building called Bronte tower whose height in feet is the same number as the dewey decimal classification for the Charlotte Bronte book that was published in 1847. Where would this building rank among tallest buildings in New York City, as of August 2024?",
+    "ground_truth": "37th",
+    "llm_response": "New York City is home to many of the world's tallest and most iconic skyscrapers.\n\nThe five tallest buildings in New York City are:\n\n1.  **One World Trade Center**: Standing at 1,776 feet (541 meters), it is the tallest building in New York City, the United States, and the Western Hemisphere. It was completed in 2014.\n2.  **Central Park Tower**: With a height of 1,550 feet (472 meters), this residential building was completed in 2020 and is the tallest residential building in the world by architectural height.\n3.  **111 West 57th Street**: Reaching 1,428 feet (435 meters), this residential skyscraper, also known as Steinway Tower, was completed in 2021 and is known as the world's most slender skyscraper.\n4.  **One Vanderbilt**: An office building completed in 2020, it is 1,401 feet (427 meters) tall and is the tallest all-office building in Midtown Manhattan.\n5.  **432 Park Avenue**: This residential skyscraper, completed in 2015, stands at 1,397 feet (426 meters).\n\nOther notable tall buildings include the iconic **Empire State Building** (1,250 feet / 381 meters), which was the world's tallest for almost four decades after its completion in 1931, and the **Chrysler Building** (1,046 feet / 319 meters), completed in 1930. The **Brooklyn Tower** (1,066 feet / 325 meters) is the tallest building in Brooklyn and the tallest outside of Manhattan.",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "The question asks for the rank of a hypothetical building (Bronte tower) whose height is determined by the Dewey Decimal Classification of a specific Charlotte Bronte book. The ground truth answer \"37th\" is the specific rank that would be derived from correctly calculating the building's height and comparing it to a list of NYC's tallest buildings. The predicted answer provides a list of some of the tallest buildings in New York City but does not attempt to calculate the height of the \"Bronte tower\" or determine its rank. Therefore, the ground truth answer is not present in the predicted answer.",
+    "reasoning_type": "Numerical reasoning | Tabular reasoning | Multiple constraints"
+  },
+  {
+    "index": 2,
+    "prompt": "How many years earlier would Punxsutawney Phil have to be canonically alive to have made a Groundhog Day prediction in the same state as the US capitol?",
+    "ground_truth": "87",
+    "llm_response": "I have read the note, and it indicates that there are no margin notes present: `[]`. Therefore, I cannot analyze any content from the margin notes.",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "The predicted answer is completely irrelevant to the question asked. It appears to be a system message or an error response, stating that it cannot analyze content from margin notes. It does not provide any numerical answer or information related to Punxsutawney Phil or the US capitol, and therefore does not contain the ground truth answer of \"87\".",
+    "reasoning_type": "Numerical reasoning | Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 3,
+    "prompt": "As of August 1, 2024, which country were holders of the FIFA World Cup the last time the UEFA Champions League was won by a club from London?",
+    "ground_truth": "France",
+    "llm_response": "Based on the provided Wikipedia articles:\n\n1.  **FIFA World Cup**: The \"FIFA World Cup\" article states that \"England\" hosted the World Cup in 1966. While London is the capital of England, the article about London itself does not explicitly list the FIFA World Cup as an event London has hosted, unlike the Summer Olympics or Cricket World Cup finals, which are explicitly mentioned.\n2.  **UEFA Champions League**: The \"UEFA Champions League\" article explicitly mentions that the Champions League finals were held at \"Wembley\" in both **2011** and **2013**. Wembley Stadium is located in London.\n\nTherefore, London has hosted the UEFA Champions League. The provided text does not explicitly state that London hosted the FIFA World Cup.",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "The question asks for the country that held the FIFA World Cup the last time a London club won the UEFA Champions League. The Ground Truth Answer is \"France\". The Predicted Answer discusses whether London hosted the FIFA World Cup or the UEFA Champions League, and mentions England hosted the World Cup in 1966. It completely fails to identify the country that held the FIFA World Cup at the specified time, and therefore does not contain \"France\" as the answer to the question.",
+    "reasoning_type": "Tabular reasoning | Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 4,
+    "prompt": "What is the name of the vocalist from the first band to make it in the top 200 under the record label that produced the third studio album for Dismal Euphony?",
+    "ground_truth": "Jens Kidman",
+    "llm_response": "Based on the margin notes and the provided Wikipedia articles:\n\n**Dismal Euphony:**\n*   Is a Norwegian gothic metal band from Stavanger, Norway, active from 1994\u20132001.\n*   They joined Nuclear Blast and released their third studio album, **\"All Little Devils,\"** in 1999.\n*   \"All Little Devils\" was their first album with Nuclear Blast and featured their new female singer, Anja Natasha.\n\n**Meshuggah:**\n*   Is a Swedish extreme metal band formed in Ume\u00e5 in 1987, currently active.\n*   They signed with German heavy metal record label Nuclear Blast early in their career.\n*   In 2002, their album **\"Nothing\"** made history by becoming the first album from Nuclear Blast Records to crack the Billboard 200 chart, reaching number 165.\n*   Jens Kidman has been Meshuggah's lead vocalist since the band's formation in 1987.",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "The question asks for the vocalist of the first band to make it into the top 200 under the record label that produced Dismal Euphony's third studio album. The Predicted Answer correctly identifies Nuclear Blast as the record label, Meshuggah as the first band from Nuclear Blast to crack the Billboard 200, and explicitly states \"Jens Kidman has been Meshuggah's lead vocalist since the band's formation in 1987.\" Thus, the ground truth answer \"Jens Kidman\" is clearly present and correctly identified in the predicted answer.",
+    "reasoning_type": "Multiple constraints"
+  },
+  {
+    "index": 5,
+    "prompt": "According to the 2000 United States census, what was the 2000 population of the birth city of the only 21st-century mayor of Austin, Texas who also served as mayor in the 1990s? Round your answer to the nearest thousand.",
+    "ground_truth": "506000",
+    "llm_response": "Kirk Watson was born in Oklahoma City, Oklahoma. According to the 2000 census, the population of Oklahoma City was 506,132, which, when rounded to the nearest thousand, is 506,000.",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "The predicted answer explicitly states \"506,000\" as the rounded population, which directly matches the ground truth answer of \"506000\". The additional information provided by the LLM is correct and leads to the ground truth.",
+    "reasoning_type": "Numerical reasoning | Tabular reasoning | Multiple constraints"
+  },
+  {
+    "index": 6,
+    "prompt": "I have an element in mind and would like you to identify the person it was named after. Here's a clue: The element's atomic number is 9 higher than that of an element discovered by the scientist who discovered Zirconium in the same year.",
+    "ground_truth": "Mendelevium is named after Dmitri Mendeleev.",
+    "llm_response": "Based on the provided Wikipedia articles, the person discussed, Martin Heinrich Klaproth, made the following contributions:\n\n*   He was a major systematizer of analytical chemistry and an independent inventor of gravimetric analysis.\n*   He significantly improved the use of laboratory apparatus due to his meticulous attention to detail.\n*   He was a crucial figure in understanding the composition of minerals and characterizing chemical elements.\n*   He is credited with the discovery of **uranium** in 1789, which he identified in the mineral pitchblende.\n*   He is also credited with the discovery of **zirconium** in 1789, separating it in the form of its oxide, zirconia, from the mineral \"hyacinth\" from Ceylon.\n*   He was involved in the discovery or co-discovery of several other elements, including **strontium** (1793), **titanium** (1795), **chromium** (1797), and **cerium** (1803).\n*   He confirmed the previous discoveries of **tellurium** (1798) and **beryllium** (1798).",
+    "evaluation_decision": "ERROR",
+    "evaluation_explanation": "'NoneType' object has no attribute 'strip'",
+    "reasoning_type": "Numerical reasoning | Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 7,
+    "prompt": "As of Aug 3, 2024, the artist who released the album \"Father of Asahd\" went to the same high school as an Olympic diver. How many Olympic teams did this diver participate on?",
+    "ground_truth": "2",
+    "llm_response": "Mark Ruiz is an Olympic diver who represented the United States in the 2000 and 2004 Olympic Games. He is a graduate of Dr. Phillips High School in Orlando, Florida.",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "The question asks \"How many Olympic teams did this diver participate on?\". The Ground Truth Answer is \"2\". The Predicted Answer states that the diver \"represented the United States in the 2000 and 2004 Olympic Games.\" This explicitly lists two distinct Olympic Games, which directly implies participation in two Olympic teams. Therefore, the numerical answer \"2\" is present and clearly derivable from the predicted answer.",
+    "reasoning_type": "Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 8,
+    "prompt": "A general motors vehicle is named after the largest ward in the country of Monaco.  How many people had walked on the moon as of the first model year of the vehicle? Note: the model year is not the same as the year the model was first produced.",
+    "ground_truth": "4",
+    "llm_response": "Based on the notes and the provided articles:\n\nThe Chevrolet Monte Carlo is listed as a \"Personal luxury\" car in the Chevrolet timeline, with its first entry under the year 1970. The \"Chevrolet Monte Carlo\" article states that the car derives its name from the city in Monaco, which is named Monte Carlo.\n\nThe first time a person landed on the Moon and any extraterrestrial body was when Neil Armstrong, the commander of the American mission Apollo 11, set foot on the Moon at 02:56 UTC on July 21, 1969. Astronauts Neil Armstrong and Buzz Aldrin landed their Apollo Lunar Module (LM) on July 20, 1969, and walked on the lunar surface.",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "The question asks for the number of people who had walked on the moon as of the first model year of the Chevrolet Monte Carlo (1970). The Ground Truth Answer is 4. The Predicted Answer correctly identifies the vehicle and its first model year, and mentions Neil Armstrong and Buzz Aldrin walking on the moon in 1969. However, it only explicitly names two individuals and does not state the total number of people who had walked on the moon by 1970, which was four (Neil Armstrong, Buzz Aldrin, Pete Conrad, Alan Bean). The number \"4\" is not present in the predicted answer.",
+    "reasoning_type": "Tabular reasoning | Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 9,
+    "prompt": "The Pope born Pietro Barbo ended a long-running war two years after his papacy began, which famous conflict, immortalized in tapestry took place 400 years earlier?",
+    "ground_truth": "The Battle of Hastings.",
+    "llm_response": "The Bayeux Tapestry is a renowned embroidered cloth that measures nearly 70 meters (230 feet) long and 50 centimeters (20 inches) tall.\n\nHere's a breakdown of its creation, content, and current location:\n\n*   **Creation:**\n    *   It is believed to have been commissioned in the 1070s, within a few years of the Norman Conquest, most likely by **Bishop Odo of Bayeux**, William the Conqueror's maternal half-brother.\n    *   The tapestry was probably designed and constructed in **England** by Anglo-Saxon artists, with the actual stitching work carried out by women needleworkers, renowned for their \"Opus Anglicanum\" (English work).\n\n*   **Content:**\n    *   The tapestry depicts the events leading up to the **Norman Conquest of England in 1066**, culminating in the Battle of Hastings.\n    *   It tells the story from the point of view of the conquering Normans, beginning with King Edward the Confessor sending Harold Godwinson to Normandy and continuing through Harold's journey, his oath to William, Edward's death, Harold's coronation, the appearance of Halley's Comet, William's invasion preparations, the landing in England, and the **Battle of Hastings**.\n    *   The cloth consists of 58 scenes, many with Latin descriptions (tituli), embroidered on linen with colored woollen yarns. The final part, likely depicting William's coronation, is missing.\n\n*   **Location:**\n    *   The Bayeux Tapestry is currently exhibited at the **Mus\u00e9e de la Tapisserie de Bayeux in Bayeux, Normandy, France**.\n    *   It is planned to be loaned to the **British Museum** in London, England, for display from September 2026 to July 2027, which would be its first return to Britain in 900 years.",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "The ground truth answer is \"The Battle of Hastings\". The predicted answer, while providing extensive detail about the Bayeux Tapestry, explicitly mentions \"the Battle of Hastings\" multiple times within its \"Content\" section, stating that the tapestry depicts events culminating in and including the Battle of Hastings. Therefore, the ground truth answer is present in the predicted answer.",
+    "reasoning_type": "Temporal reasoning"
+  },
+  {
+    "index": 10,
+    "prompt": "An Australian artist, born the same year as artist Janet Cumbrae Stewart and fellow member of the Melbourne Society of Women Painters and Sculptors, had her painting featured on the cover of Women's World Magazine in 1923. What is the name of the painting?",
+    "ground_truth": "Reve d'Or",
+    "llm_response": "Based on the margin notes and the provided Wikipedia articles, Dora Lynnell Wilson was a British-born Australian artist (31 August 1883 \u2013 21 November 1946).\n\nKey details about her include:\n*   She was known for her etchings and street scenes, as well as pastels and oils of still lifes and nudes.\n*   In 1923, her work, 'Reve d'Or', gained significant recognition by being reproduced on the cover of \"Women's World\" and exhibited at the prestigious Soci\u00e9t\u00e9 des Artistes Fran\u00e7ais in Paris.\n*   She was an active member of the Melbourne Society of Women Painters and Sculptors, an organization established in 1902 and considered the oldest surviving women's art group in Australia.\n*   She studied at the National Gallery of Victoria School under Bernard Hall and Frederick McCubbin, and her studio was a meeting place for \"The Twelve Melbourne Painters.\"\n*   Wilson embarked on extensive travels across Europe from 1923, commissioned to paint European landmarks, and later focused on historical scenes of Melbourne.",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "The question asks for the name of the painting. The Ground Truth Answer is \"Reve d'Or\". The Predicted Answer explicitly states: \"In 1923, her work, 'Reve d'Or', gained significant recognition by being reproduced on the cover of \"Women's World\"...\" This directly provides the correct painting name as requested by the question and matches the ground truth.",
+    "reasoning_type": "Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 11,
+    "prompt": "As of July 1, 2024, what is the parent company of the current record label of the singer of Edge of Seventeen?",
+    "ground_truth": "Warner Music Group",
+    "llm_response": "Stevie Nicks is currently signed to Reprise Records. Reprise Records is a subsidiary of Warner Music Group.",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "The predicted answer explicitly states \"Warner Music Group\", which is the exact ground truth answer. The LLM correctly identified the parent company of the record label.",
+    "reasoning_type": "Tabular reasoning | Multiple constraints"
+  },
+  {
+    "index": 12,
+    "prompt": "The Basibasy mine is located in Madagascar. This mine is abundant in a specific chemical element that was discovered for the first time in 1791. The person who discovered this element was born on what is now known as a major US holiday - what holiday is this?",
+    "ground_truth": "Christmas",
+    "llm_response": "William Gregor, the discoverer of titanium, was born on December 25, 1761. This date coincides with Christmas, an annual festival commemorating the birth of Jesus Christ. Christmas was formally declared a United States federal holiday on June 28, 1870.",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "The predicted answer explicitly states \"Christmas\" as the holiday, which directly matches the ground truth answer. The additional information provided in the predicted answer (discoverer's name, element, birth date, and when Christmas became a federal holiday) is correct and relevant context, but the core answer to the question \"what holiday is this?\" is clearly present.",
+    "reasoning_type": "Multiple constraints"
+  },
+  {
+    "index": 13,
+    "prompt": "One of Barbara Kingsolver's best known novels is about an American missionary family which moves to Africa. At the time, the country they move to was a Belgian colony. Which year did it become independent?",
+    "ground_truth": "1960",
+    "llm_response": "\"The Poisonwood Bible\" is a 1998 novel by American author Barbara Kingsolver, recognized for its exploration of themes such as social justice, colonialism, religion, and environmentalism.\n\nHere's a breakdown of the book and its context:\n\n*   **About the Author, Barbara Kingsolver:**\n    *   Barbara Kingsolver (born April 8, 1955) is a Pulitzer Prize-winning novelist, poet, and essayist. She often addresses social justice, biodiversity, and the interaction between humans and their environments in her work.\n    *   Interestingly, Kingsolver lived briefly in the Congo during her early childhood, providing a personal connection to the novel's setting, though the book is not autobiographical.\n    *   \"The Poisonwood Bible\" is considered one of her most notable works, alongside other acclaimed novels like \"Demon Copperhead\" (for which she won the Pulitzer Prize for Fiction in 2023).\n\n*   **Summary of \"The Poisonwood Bible\":**\n    *   The novel tells the story of the Price family\u2014Baptist missionary Nathan Price, his wife Orleanna, and their four daughters (Rachel, Leah, Adah, and Ruth May)\u2014who move from Georgia, U.S., to the remote village of Kilanga in the Belgian Congo in 1959.\n    *   The title itself is symbolic, referring to Nathan Price's mispronunciation of a Kikongo phrase intended to mean \"Jesus is most precious\" but instead coming out as \"Jesus is poisonwood.\" This linguistic error highlights the cultural misunderstandings and destructive impact of his missionary zeal.\n    *   The narrative is told from the alternating perspectives of Orleanna and her four daughters, each offering a unique lens on their experiences in Africa. The story chronicles their struggles to adapt to the unfamiliar culture, the challenges of their father's rigid evangelism, and the political turmoil of the Congo on the cusp of independence.\n    *   Key plot points include the family's initial culture shock, their failed attempts at converting the villagers, their personal growth and divergence as individuals, and ultimately, a tragic snake bite that leads to the death of the youngest daughter, Ruth May.\n    *   After Ruth May's death, Orleanna and the remaining daughters leave Nathan, each embarking on very different paths shaped by their time in Africa. The story concludes with Ruth May's reflections from beyond the grave, emphasizing the Congolese concept of \"muntu\" (unity and interconnectedness).\n\n*   **Why it's a Notable Work:**\n    *   **Narrative Structure:** Critics, like John Mullan, have praised the book's remarkable narrative form, which offers a multifaceted perspective through the voices of five distinct characters.\n    *   **Historical Context:** It effectively uses the backdrop of the Belgian Congo's struggle for independence in the late 1950s and early 1960s to explore larger themes of colonialism, cultural arrogance, and the complexities of foreign intervention.\n    *   **Acclaim and Awards:** \"The Poisonwood Bible\" was a finalist for the Pulitzer Prize in Fiction and the PEN/Faulkner Award in 1999. It was also an Oprah's Book Club selection in 1999 and won the Boeke Prize in 2000.\n\n*   **Historical Context of the Setting (Belgian Congo):**\n    *   The Belgian Congo was a Belgian colony in Central Africa from 1908 until it gained independence on June 30, 1960, becoming the Republic of the Congo (L\u00e9opoldville).\n    *   The period leading up to independence (1959-1960), when the Price family arrives, was marked by increasing political instability and growing nationalist movements against Belgian colonial rule.\n    *   Belgian rule was characterized by a \"colonial trinity\" of state, missionary, and private-company interests, with a paternalistic approach that gradually faced internal criticism and Congolese resistance.\n    *   The novel vividly portrays the clash between Western missionary efforts and the rich, complex indigenous cultures, set against the dramatic backdrop of political upheaval and decolonization.",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "The question asks for the year the Belgian colony became independent. The \"Ground Truth Answer\" is 1960. The \"Predicted Answer\" explicitly states under the \"Historical Context of the Setting (Belgian Congo)\" section: \"The Belgian Congo was a Belgian colony in Central Africa from 1908 until it gained independence on June 30, 1960, becoming the Republic of the Congo (L\u00e9opoldville).\" This directly provides the year 1960 as the year of independence.",
+    "reasoning_type": "Multiple constraints"
+  },
+  {
+    "index": 14,
+    "prompt": "Which football player got 15 or more assists in La Liga during the 2010-2011 season and also played for Arsenal at one point in his career?",
+    "ground_truth": "This was Mesut Ozil.",
+    "llm_response": "In the 2010\u201311 La Liga season, the top assist providers were:\n\n*   **Mesut \u00d6zil** (Real Madrid) with 18 assists\n*   **Lionel Messi** (Barcelona) with 18 assists",
+    "evaluation_decision": "ERROR",
+    "evaluation_explanation": "'NoneType' object has no attribute 'strip'",
+    "reasoning_type": "Numerical reasoning | Tabular reasoning | Multiple constraints"
+  },
+  {
+    "index": 15,
+    "prompt": "In Slovakia there is a well known Film Festival called the Bratistlava International Film Festival. What city/ town was the film editor for the Grand Prix winner of 2003 born in?",
+    "ground_truth": "Roudnice nad Labem",
+    "llm_response": "Based on the margin notes and the provided Wikipedia articles:\n\nThe film **Boredom in Brno** (Original title: *Nuda v Brn\u011b*), directed by **Vladim\u00edr Mor\u00e1vek** from the **Czech Republic**, won the **Grand Prix** at the Bratislava International Film Festival in **2003**.\n\nThe film's editor was **Ji\u0159\u00ed Bro\u017eek**, who also received a Czech Lion award for Best Editing for his work on *Boredom in Brno*.\n\n**Ji\u0159\u00ed Bro\u017eek** was born on **11 March 1947** (making him 78 years old as of the information provided) in **Roudnice nad Labem, Czechoslovakia**. Roudnice nad Labem is a town located in the \u00dast\u00ed nad Labem Region of the Czech Republic.",
+    "evaluation_decision": "TRUE",
+    "evaluation_explanation": "The predicted answer explicitly states that Ji\u0159\u00ed Bro\u017eek, the film editor, was born in \"Roudnice nad Labem\", which is the exact information provided in the ground truth answer.",
+    "reasoning_type": "Tabular reasoning | Multiple constraints"
+  },
+  {
+    "index": 16,
+    "prompt": "On March 7th, 2012, the director James Cameron explored a very deep underseas trench.  As of August 3, 2024, how many times would the tallest building in San Francisco fit end to end from the bottom of the New Britain Trench to the surface of the ocean? The answer should be a rounded-off whole number.   ",
+    "ground_truth": "28",
+    "llm_response": "The Planet Deep reaches a maximum depth of 29,988 feet (9,140 m) below sea level.",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "The question asks for a rounded-off whole number representing how many times the tallest building in San Francisco would fit end to end from the bottom of the New Britain Trench to the surface. The Ground Truth Answer is \"28\", which is this calculated whole number. The Predicted Answer provides a depth measurement (29,988 feet or 9,140 m) for \"The Planet Deep\", which is not the New Britain Trench, and it does not provide the calculated number \"28\". Therefore, the vital fact (the numerical answer to the specific question) from the Ground Truth is not present in the Predicted Answer.",
+    "reasoning_type": "Numerical reasoning | Tabular reasoning | Post processing | Temporal reasoning"
+  },
+  {
+    "index": 17,
+    "prompt": "In August of 2024, what is the first name of the mayor of the U.S. state capital city who attended the same university as at least one U.S. president and whose city is home to an outgoing or former full member of the Big 12 Conference",
+    "ground_truth": "Leirion",
+    "llm_response": "The University of Nebraska\u2013Lincoln was a founding member of the Big 12 Conference, joining in 1996 when the conference was formed from the merger of the Big Eight Conference and four members of the Southwest Conference. Nebraska remained a full member until 2011, when it departed to join the Big Ten Conference.\n\nDuring its tenure in the Big 12 (1996-2011), Nebraska achieved several national championships:\n\n*   **Football:** 1997 (USAT/ESPN selector)\n*   **Women's Volleyball:** 2000, 2005\n*   **Women's Bowling:** 1999, 2001, 2004, 2005, 2009\n\nThe Wikipedia article on the Big 12 Conference also notes that Nebraska had a significant rivalry with Oklahoma during its time in the conference, which was a \"three-on, three-off\" system that came under considerable criticism for not allowing a yearly match between the two teams.",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "The question asks for the first name of a specific mayor. The ground truth answer provides \"Leirion\". The predicted answer discusses the history of the University of Nebraska\u2013Lincoln with the Big 12 Conference, including its membership, departure, and national championships. It does not provide any mayor's name, nor does it answer the question asked. Therefore, the ground truth answer is not present in the predicted answer.",
+    "reasoning_type": "Multiple constraints"
+  },
+  {
+    "index": 18,
+    "prompt": "How many years after the founding of the 50th most populous US city, based on 2023 estimate population data, did Frank Fox receive UK Patent (1344259)?",
+    "ground_truth": "98 Years (Arlington, TX & Rubik's Cube)",
+    "llm_response": "The Rubik's Cube was invented in 1974 by Hungarian sculptor and professor of architecture Ern\u0151 Rubik.\n\nRubik applied for a Hungarian patent for his \"Magic Cube\" in 1975, and his U.S. patent for the Cube (U.S. patent 4,378,116) was granted on March 29, 1983, and expired in 2000. It's worth noting that a prior U.S. patent for a 2x2x2 \"Puzzle with Pieces Rotatable in Groups\" was granted to Larry D. Nichols in 1972, which was found to be infringed upon by Rubik's 2x2x2 Pocket Cube, but not the 3x3x3 Cube.\n\nAs of January 2024, approximately 500 million Rubik's Cubes had been sold worldwide, making it the world's bestselling puzzle game and toy.",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "The predicted answer discusses the history and patents of the Rubik's Cube. The ground truth answer provides a specific numerical value (\"98 Years\") and mentions \"Arlington, TX\" and \"Rubik's Cube\". While the predicted answer mentions \"Rubik's Cube\", it completely misses the numerical answer \"98 Years\" and \"Arlington, TX\", which are crucial components of the ground truth. Furthermore, the predicted answer does not address the core question about the time difference between a city's founding and Frank Fox's UK Patent (1344259).",
+    "reasoning_type": "Numerical reasoning | Tabular reasoning | Multiple constraints | Temporal reasoning"
+  },
+  {
+    "index": 19,
+    "prompt": "As of August 4, 2024, in what state was the first secretary of the latest United States federal executive department born?",
+    "ground_truth": "Pennsylvania",
+    "llm_response": "Thomas Joseph Ridge was born on August 26, 1945.\n\nTo find his age in 2025:\n2025 - 1945 = 80\n\nTherefore, Tom Ridge will be 80 years old in 2025.",
+    "evaluation_decision": "FALSE",
+    "evaluation_explanation": "The question asks for the state where the first secretary of the latest United States federal executive department was born. The Ground Truth Answer correctly identifies this state as \"Pennsylvania\". The Predicted Answer provides information about Thomas Joseph Ridge's birth date and an age calculation, but it does not mention his birthplace or any state, thus failing to answer the question.",
+    "reasoning_type": "Tabular reasoning | Multiple constraints"
+  }
+]
