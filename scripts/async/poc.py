@@ -11,6 +11,7 @@ Asynchronous Proof of Concept for FRAMES dataset
 import asyncio
 import json
 import os
+from pathlib import Path
 import time
 
 # 3rd party libraries:
@@ -32,9 +33,22 @@ MODEL4 = 'google/gemini-pro-1.5'  # Used as grading model
 MODEL5 = 'google/gemini-pro-2.5'  # Powerful but expensive!
 MODEL6 = 'openai/gpt-4o-mini'  # Backup instead of Gemini Pro for grading
 MODEL7 = 'google/gemini-2.5-flash-lite'  # Used instead of Gemini Pro for grading
+MODEL8 = 'google/gemini-2.0-flash-001'
+#
+# Other models considered:
+# gpt-4.1-mini - too expensive
+# gpt-5-mini - too expensive
+# gemini-*-pro - too expensive
+#
 #
 NAIVE_Q_PROMPT = '''You are a helpful and accurate assistant.
 Please answer the following question based on your knowledge.
+Question: {question}
+Answer:'''
+#
+ORACLE_Q_PROMPT = '''Background information:\n{background_info}\n\n
+You are a helpful and accurate assistant.
+Please answer the following question based on your knowledge and the background information.
 Question: {question}
 Answer:'''
 #
@@ -67,17 +81,26 @@ DATASET = 'google/frames-benchmark'
 LIMITER: int|None = None
 #
 # Maximum concurrent requests:
-GRADER_GATE = asyncio.Semaphore(20)
-Q_GATE = asyncio.Semaphore(20)
+GRADER_GATE = asyncio.Semaphore(15)
+Q_GATE = asyncio.Semaphore(15)
 MAX_RETRIES = 3
 #
+DATASET_FILE = Path(__file__).parent/'data'/'frames_with_context_complete.json'
 OUTPUT_FILE = 'results.json'
 
 
-async def ask_1q_naive(question: str, *, client: AsyncOpenAI, temperature: float=0.0,
-                       max_completion_tokens: int=1_000, model: str=MODEL1b) -> str:
-    '''Send one question to model via client and return the model's answer.'''
-    prompt = NAIVE_Q_PROMPT.format(question=question)
+async def ask_1q(question: str, *, client: AsyncOpenAI, temperature: float=0.0,
+                 max_completion_tokens: int=1_000, model: str=MODEL7,
+                 prompt_template: str=NAIVE_Q_PROMPT, prompt_vars: dict[str, str]|None=None,
+                 verbose: bool=False) -> str:
+    '''Send one question using the provided prompt template and return the
+       model's answer.'''
+    variables = {'question': question}
+    if prompt_vars:
+        variables |= prompt_vars
+    prompt = prompt_template.format(**variables)
+    if verbose:
+        print(f'User Prompt:  {prompt}')
 
     async with Q_GATE:
         delay = 1.0
@@ -88,6 +111,7 @@ async def ask_1q_naive(question: str, *, client: AsyncOpenAI, temperature: float
                     extra_body = {},
                     model = model,
                     messages = [
+                        ### Make this dynamic depending on model???
                         # Removing the system prompt for gemma-3-27b-it - model
                         # doesn't support it:
                         # {'role': 'system', 'content': 'You are a highly competent assistant.'},
@@ -174,10 +198,20 @@ async def grade_response(*, question: str, actual_answer: str, model_answer: str
 
 
 async def process_question(*, index: int, question: dict[str, str], client: AsyncOpenAI,
-                           status_queue: asyncio.Queue|None=None) -> dict[str, str]:
+                           mode: str='naive', status_queue: asyncio.Queue|None=None,
+                           verbose: bool=False) -> dict[str, str]:
     if status_queue:
         await status_queue.put(('ask_start', index))
-    model_answer = await ask_1q_naive(question['Prompt'], client=client)
+    if mode == 'naive':
+        model_answer = await ask_1q(question['Prompt'], client=client, verbose=verbose)
+    elif mode == 'oracle':
+        model_answer = await ask_1q(
+            question['Prompt'], client=client, prompt_template=ORACLE_Q_PROMPT,
+            prompt_vars={'background_info': question['generated_context']}, verbose=verbose
+        )
+    else:
+        raise ValueError(f'Unknown mode: {mode}')
+
     if status_queue:
         await status_queue.put(('ask_done', index))
 
@@ -210,9 +244,9 @@ async def status_monitor(total: int, queue: asyncio.Queue) -> None:
             break
         question_number = index + 1 if index is not None else '?'
         if event == 'ask_start':
-            print(f'Starting ask_1q_naive for question {question_number}...')
+            print(f'Starting ask_1q for question {question_number}...')
         elif event == 'ask_done':
-            print(f'Completed ask_1q_naive for question {question_number}.')
+            print(f'Completed ask_1q for question {question_number}.')
         elif event == 'grade_start':
             print(f'Starting grade_response for question {question_number}...')
         elif event == 'grade_done':
@@ -222,7 +256,8 @@ async def status_monitor(total: int, queue: asyncio.Queue) -> None:
         queue.task_done()
 
 
-async def main(qa: list[dict[str, str]], client: AsyncOpenAI) -> list[dict[str, str]]:
+async def main(qa: list[dict[str, str]], client: AsyncOpenAI, *, mode: str='naive',
+               verbose: bool=False) -> list[dict[str, str]]:
     total = min(len(qa), LIMITER) if LIMITER else len(qa)
     status_queue: asyncio.Queue = asyncio.Queue()
     monitor = asyncio.create_task(status_monitor(total, status_queue))
@@ -233,7 +268,7 @@ async def main(qa: list[dict[str, str]], client: AsyncOpenAI) -> list[dict[str, 
             break
         tasks.append(asyncio.create_task(
             process_question(index=index, question=question, client=client,
-                             status_queue=status_queue)
+                             status_queue=status_queue, mode=mode, verbose=verbose)
         ))
 
     try:
@@ -270,7 +305,15 @@ def get_client() -> AsyncOpenAI:
 
 
 def report(solutions: list[dict[str, str]]) -> None:
-    '''Calculate and print summary statistics'''
+    '''Calculate and print summary statistics
+
+       Types:
+       * Multiple Constraints
+       * Numerical Reasoning
+       * Post Processing
+       * Tabular Reasoning
+       * Temporal Reasoning
+    '''
     total_samples = len(solutions)
     correct_answers = sum(1 for s in solutions if s['GraderDecision'] == 'TRUE')
     accuracy = correct_answers/total_samples
@@ -309,18 +352,27 @@ def get_dataset(*, dataset: str=DATASET, verbose: bool=False) -> list[dict[str, 
 
 
 if __name__ == '__main__':
-    verbose = True
+    verbose = False
+    dataset = 'default'  # 'default' or 'complete'
 
     client = get_client()
 
-    qa = get_dataset(verbose=verbose)
+    if dataset == 'complete':
+        mode = 'oracle'
+        with open(DATASET_FILE, 'r') as infile:
+            qa = json.load(infile)
+    elif dataset == 'default':
+        mode = 'naive'
+        qa = get_dataset(verbose=verbose)
+    else:
+        raise ValueError(f'Unknown dataset: {dataset}')
 
     # Measure execution time to benchmark sequential/synchronous execution
     # versus asynchronous execution:
     start = time.perf_counter()
 
     # Main loop:
-    solutions = asyncio.run(main(qa, client))
+    solutions = asyncio.run(main(qa, client, mode=mode, verbose=verbose))
 
     # Save:
     save(solutions)
