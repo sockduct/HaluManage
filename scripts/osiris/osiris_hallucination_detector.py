@@ -599,16 +599,24 @@ class OsirisDetector:
             y_true = [r.metadata['evaluation_decision'] == 'TRUE' for r in gt_results]
             y_pred = [r.is_hallucination for r in gt_results]
 
-            # True Positive:  GT=False, HP=True
+            '''
+                                          | Incorrect/Hallucination | Correct/Not a hallucination
+            Predicted Hallucination       |   True Positive (TP)    |   False Positive (FP)
+            Predicted Not a hallucination |   False Negative (FN)   |   True Negative (TN)
+
+            Ground Truth (GT) = Grader assessment of model's answer (True/False)
+            Hallucination Prediction (HP) = Osiris model's prediction (True/False)
+            '''
+            # True Positive:  GT=False (Wrong answer), HP=True (Hallucination)
             tp = sum(1 for t, p in zip(y_true, y_pred) if not t and p)
 
-            # False Positive:  GT=True, HP=True
+            # False Positive:  GT=True (Right answer), HP=True (Hallucination)
             fp = sum(1 for t, p in zip(y_true, y_pred) if t and p)
 
-            # True Negative:  GT=True, HP=False
+            # True Negative:  GT=True (Right answer), HP=False (Not a hallucination)
             tn = sum(1 for t, p in zip(y_true, y_pred) if t and not p)
 
-            # False Negative:  GT=False, HP=False
+            # False Negative:  GT=False (Wrong answer), HP=False (Not a hallucination)
             fn = sum(1 for t, p in zip(y_true, y_pred) if not t and not p)
 
             metrics.true_positives = tp
@@ -623,6 +631,9 @@ class OsirisDetector:
                 2 * metrics.precision * metrics.recall,
                 metrics.precision + metrics.recall
             )
+
+            ### Specificity - TN / (TN + FP)
+            ### Precision-recall/ROC curve/ROC-AUC, PR-AUC???
 
         return metrics
 
