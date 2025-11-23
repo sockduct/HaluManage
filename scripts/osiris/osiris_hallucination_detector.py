@@ -28,12 +28,17 @@ Requirements:
     - See requirements.txt for full list
 """
 
+# Standard Library:
+import argparse
 import json
-import torch
-import numpy as np
 from pathlib import Path
 from typing import Union, List, Dict, Optional
+
+# 3rd party libraries:
 from dataclasses import dataclass, asdict, field
+import numpy as np
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+import torch
 
 try:
     import matplotlib.pyplot as plt
@@ -115,7 +120,17 @@ class Metrics:
 
     # Classification metrics (when ground truth available)
     accuracy: Optional[float] = None # Number of correct predictions / total predictions
+    accuracy2: Optional[float] = None
+    accuracy3: Optional[float] = None
     precision: Optional[float] = None # Number of true positives / (true positives + false positives)
+    precision2: Optional[float] = None
+    precision3: Optional[float] = None
+    recall: Optional[float] = None
+    recall2: Optional[float] = None
+    recall3: Optional[float] = None
+    f1_score: Optional[float] = None
+    f1_score2: Optional[float] = None
+    f1_score3: Optional[float] = None
     true_positives: Optional[int] = None
     false_positives: Optional[int] = None
     true_negatives: Optional[int] = None
@@ -595,8 +610,10 @@ class OsirisDetector:
         gt_results = [r for r in results if r.ground_truth is not None]
         if gt_results:
             # y_true = [r.ground_truth for r in gt_results]
-            # Not does ground_truth exist, but its value:
+            # Not does ground_truth exist, but its value (is it a hallucination
+            # or 'FALSE'); in other words the grader says the answer is wrong:
             y_true = [r.metadata['evaluation_decision'] == 'TRUE' for r in gt_results]
+            y_true2 = [r.metadata['evaluation_decision'] == 'FALSE' for r in gt_results]
             y_pred = [r.is_hallucination for r in gt_results]
 
             '''
@@ -631,6 +648,16 @@ class OsirisDetector:
                 2 * metrics.precision * metrics.recall,
                 metrics.precision + metrics.recall
             )
+            #
+            # Using Scikit-Learn:
+            metrics.accuracy2 = accuracy_score(y_true, y_pred)
+            metrics.accuracy3 = accuracy_score(y_true2, y_pred)
+            metrics.precision2 = precision_score(y_true, y_pred)
+            metrics.precision3 = precision_score(y_true2, y_pred)
+            metrics.recall2 = recall_score(y_true, y_pred)
+            metrics.recall3 = recall_score(y_true2, y_pred)
+            metrics.f1_score2 = f1_score(y_true, y_pred)
+            metrics.f1_score3 = f1_score(y_true2, y_pred)
 
             ### Specificity - TN / (TN + FP)
             ### Precision-recall/ROC curve/ROC-AUC, PR-AUC???
@@ -656,6 +683,18 @@ class OsirisDetector:
             print(f"\nConfusion Matrix:")
             print(f"  TP={m.true_positives:<4} FP={m.false_positives:<4}")
             print(f"  FN={m.false_negatives:<4} TN={m.true_negatives:<4}")
+
+            print(f'\nUsing Scikit-Learn:')
+            print(f"  Accuracy:  {m.accuracy2:.3f}")
+            print(f"  Precision: {m.precision2:.3f}")
+            print(f"  Recall:    {m.recall2:.3f}")
+            print(f"  F1-Score:  {m.f1_score2:.3f}")
+
+            print(f'\nUsing Scikit-Learn Alt:')
+            print(f"  Accuracy:  {m.accuracy3:.3f}")
+            print(f"  Precision: {m.precision3:.3f}")
+            print(f"  Recall:    {m.recall3:.3f}")
+            print(f"  F1-Score:  {m.f1_score3:.3f}")
 
         print("="*80 + "\n")
 
@@ -746,9 +785,49 @@ class OsirisDetector:
         return viz_paths
 
 
-# ============================================================================
-# EXAMPLE USAGE
-# ============================================================================
+def run_detector(input_path: str, output_path: str, *, visualize: bool=True,
+                 inline: bool=False, verbose: bool=True) -> None:
+    detector = OsirisDetector(verbose=verbose)
+    results = detector.evaluate(input_path, output_path, visualize=visualize, inline=inline)
+
+    print("="*80)
+    print("DETECTION COMPLETE")
+    print("="*80)
+    print(f"\nResults saved to: {output_path}")
+    print(f"Visualizations: {len(results.get('visualizations', []))} files")
+    print(f"Hallucinations detected: {results['metrics']['hallucinations_detected']}")
+    print()
+
+
+def parse_args() -> argparse.Namespace:
+    """Parse command-line arguments for running the detector."""
+    parser = argparse.ArgumentParser(
+        description="Run the Osiris hallucination detector on a JSON dataset"
+    )
+    parser.add_argument(
+        "input_path",
+        nargs="?",
+        help="Path to input JSON file containing samples"
+    )
+    parser.add_argument(
+        "output_path",
+        nargs="?",
+        help="Path to save the detector results JSON"
+    )
+    parser.add_argument(
+        "--inline",
+        action="store_true",
+        help="Display matplotlib plots inline (useful in notebooks)"
+    )
+    parser.add_argument(
+        "--no-visualize",
+        dest="visualize",
+        action="store_false",
+        help="Disable visualization generation"
+    )
+    parser.set_defaults(visualize=True)
+    return parser.parse_args()
+
 
 def main():
     """
@@ -757,16 +836,15 @@ def main():
     This function demonstrates basic usage. Provide
     your own data input/output paths as command-line arguments to actually run.
     """
-    import sys
+    args = parse_args()
 
-    if len(sys.argv) > 2:
-        input_path = sys.argv[1]
-        output_path = sys.argv[2]
+    if args.input_path and args.output_path:
+        input_path = args.input_path
+        output_path = args.output_path
     else:
-        print("Usage: python osiris_detector.py <input.json> <output.json>")
-        print("\nCreating example dataset for demonstration...")
+        print("Usage: python osiris_hallucination_detector.py <input.json> <output.json>")
+        print("\nNo input/output paths provided. Creating example dataset for demonstration...")
 
-        # Create example dataset
         example = [
             {
                 "prompt": "What is the capital of France?",
@@ -796,22 +874,7 @@ def main():
 
         print(f"Created: {input_path}\n")
 
-    # Run detector
-    detector = OsirisDetector(verbose=True)
-    results = detector.evaluate(
-        input_path,
-        output_path,
-        visualize=True,
-        inline=False
-    )
-
-    print("="*80)
-    print("DETECTION COMPLETE")
-    print("="*80)
-    print(f"\nResults saved to: {output_path}")
-    print(f"Visualizations: {len(results.get('visualizations', []))} files")
-    print(f"Hallucinations detected: {results['metrics']['hallucinations_detected']}")
-    print()
+    run_detector(input_path, output_path, visualize=args.visualize, inline=args.inline)
 
 
 if __name__ == "__main__":
