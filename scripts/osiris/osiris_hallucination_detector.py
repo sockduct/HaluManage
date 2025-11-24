@@ -616,6 +616,8 @@ class OsirisDetector:
             y_true2 = [r.metadata['evaluation_decision'] == 'FALSE' for r in gt_results]
             y_pred = [r.is_hallucination for r in gt_results]
 
+            print(f'\nDebugging:\ngt_results#  {len(gt_results)}\ny_true: {y_true}\n'
+                  f'y_true2: {y_true2}\ny_pred: {y_pred}\n')
             '''
                                           | Incorrect/Hallucination | Correct/Not a hallucination
             Predicted Hallucination       |   True Positive (TP)    |   False Positive (FP)
@@ -659,6 +661,19 @@ class OsirisDetector:
             metrics.f1_score2 = f1_score(y_true, y_pred)
             metrics.f1_score3 = f1_score(y_true2, y_pred)
 
+            print(f'\nDebugging Using Scikit-Learn:')
+            print(f"  Accuracy:  {metrics.accuracy2:.3f}")
+            print(f"  Precision: {metrics.precision2:.3f}")
+            print(f"  Recall:    {metrics.recall2:.3f}")
+            print(f"  F1-Score:  {metrics.f1_score2:.3f}")
+
+            print(f'\nDebugging Using Scikit-Learn Alt:')
+            print(f"  Accuracy:  {metrics.accuracy3:.3f}")
+            print(f"  Precision: {metrics.precision3:.3f}")
+            print(f"  Recall:    {metrics.recall3:.3f}")
+            print(f"  F1-Score:  {metrics.f1_score3:.3f}")
+
+
             ### Specificity - TN / (TN + FP)
             ### Precision-recall/ROC curve/ROC-AUC, PR-AUC???
 
@@ -683,18 +698,6 @@ class OsirisDetector:
             print(f"\nConfusion Matrix:")
             print(f"  TP={m.true_positives:<4} FP={m.false_positives:<4}")
             print(f"  FN={m.false_negatives:<4} TN={m.true_negatives:<4}")
-
-            print(f'\nUsing Scikit-Learn:')
-            print(f"  Accuracy:  {m.accuracy2:.3f}")
-            print(f"  Precision: {m.precision2:.3f}")
-            print(f"  Recall:    {m.recall2:.3f}")
-            print(f"  F1-Score:  {m.f1_score2:.3f}")
-
-            print(f'\nUsing Scikit-Learn Alt:')
-            print(f"  Accuracy:  {m.accuracy3:.3f}")
-            print(f"  Precision: {m.precision3:.3f}")
-            print(f"  Recall:    {m.recall3:.3f}")
-            print(f"  F1-Score:  {m.f1_score3:.3f}")
 
         print("="*80 + "\n")
 
