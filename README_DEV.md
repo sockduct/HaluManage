@@ -146,8 +146,8 @@ The experiments show a significant performance difference between the various ap
 | `gemini-2.5-flash-lite` | Naive Baseline | 27.55% |
 | `gemini-2.5-flash-lite` | Memory Plugin RAG | 58.37% |
 | **`gemini-2.5-flash-lite`** | **Full-Context + CoT** | **76.17%** |
-| `gpt-4o-mini` | Naive Baseline (OptiLLM) | *Data not provided* |
-| `gpt-4o-mini` | RAG (OptiLLM) | *Data not provided* |
+| `gpt-4o-mini` | Naive Baseline (OptiLLM) | 32.04% |
+| `gpt-4o-mini` | RAG (OptiLLM) | 59.95% |
 
 The results clearly indicate that for `gemini-2.5-flash-lite`, providing the full, unaltered context and guiding the model with a Chain-of-Thought prompt yields the highest accuracy, outperforming both the naive baseline and the selective memory plugin approach.
 
