@@ -126,7 +126,7 @@ def main(model: str):
     # Load the dataset
     dataset = load_dataset("google/frames-benchmark", split="test")
 
-    filename = f"evaluation_results_{model.replace('/', '_')}.json"
+    filename = f"eval_results_{model.replace('/', '_')}_baseline.json"
     existing_results = load_existing_results(filename)
     last_processed_index = get_last_processed_index(existing_results)
     total_input_tokens = 0

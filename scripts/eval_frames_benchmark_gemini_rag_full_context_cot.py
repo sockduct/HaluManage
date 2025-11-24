@@ -150,12 +150,12 @@ MAX_OUTPUT_TOKENS = 1014 # Generous limit for the detailed answer and evaluation
 def main():
     parser = argparse.ArgumentParser(description="Evaluate LLM with pre-compiled context from a JSON file using Google AI SDK.")
     parser.add_argument("--model", type=str, default=MODEL_NAME, help="Model identifier (e.g., 'gemini-2.5-flash-lite')")
-    parser.add_argument("--input_file", type=str, default="frames_with_context_readurl.json", help="Path to the input JSON file with pre-generated context.")
+    parser.add_argument("--input_file", type=str, default="frames_with_full_context_readurl_v1.0.json", help="Path to the input JSON file with pre-generated context.")
     args = parser.parse_args()
     
     model = args.model
     input_file = args.input_file
-    output_filename = f"results_google_sdk_{model.replace('/', '_')}_rag.json"
+    output_filename = f"eval_results_{model.replace('/', '_')}_rag_full_context.json"
 
     # --- Load Data and Resume ---
     

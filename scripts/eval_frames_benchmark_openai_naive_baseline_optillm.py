@@ -109,7 +109,7 @@ def main(model: str):
     # Load the dataset
     dataset = load_dataset("google/frames-benchmark", split="test")
     
-    filename = f"evaluation_results_{model.replace('/', '_')}_baseline.json"
+    filename = f"eval_results_{model.replace('/', '_')}_baseline_optillm.json"
     existing_results = load_existing_results(filename)
     last_processed_index = get_last_processed_index(existing_results)
     
