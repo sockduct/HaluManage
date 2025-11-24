@@ -1,0 +1,14 @@
+==============================
+      EVALUATION SUMMARY
+==============================
+Model: gemini/gemini-2.5-flash-lite
+Total samples: 824
+Correct answers: 388
+Accuracy: 47.09%
+
+--- Token Usage Summary ---
+Total RAG Input Tokens:  30317082
+Total RAG Output Tokens: 45320
+Total EVAL Input Tokens: 183116
+Total EVAL Output Tokens:64244
+==============================

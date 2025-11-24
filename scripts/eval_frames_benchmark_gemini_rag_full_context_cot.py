@@ -178,7 +178,6 @@ def main():
     total_eval_input_tokens = sum(r.get('eval_input_tokens', 0) for r in results)
     total_eval_output_tokens = sum(r.get('eval_output_tokens', 0) for r in results)
 
-
     # --- Main Loop ---
 
     for index, item in enumerate(tqdm(data[start_index:], initial=start_index, total=total_items)):
