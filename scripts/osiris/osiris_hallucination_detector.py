@@ -650,8 +650,30 @@ class OsirisDetector:
                 2 * metrics.precision * metrics.recall,
                 metrics.precision + metrics.recall
             )
+
+            # Alternate calculations:
+            tp = sum(1 for t, p in zip(y_true2, y_pred) if not t and p)
+            fp = sum(1 for t, p in zip(y_true2, y_pred) if t and p)
+            tn = sum(1 for t, p in zip(y_true2, y_pred) if t and not p)
+            fn = sum(1 for t, p in zip(y_true2, y_pred) if not t and not p)
+            metrics.accuracy2 = _safe_div(tp + tn, len(gt_results))
+            metrics.precision2 = _safe_div(tp, tp + fp)
+            metrics.recall2 = _safe_div(tp, tp + fn)
+            metrics.f1_score2 = _safe_div(
+                2 * metrics.precision2 * metrics.recall2,
+                metrics.precision2 + metrics.recall2
+            )
+
+            # Debugging:
+            print(f'\nDebugging1:\naccuracy: {metrics.accuracy:.3f}\nprecision: '
+                  f'{metrics.precision:.3f}\nrecall: {metrics.recall:.3f}\nf1_score: '
+                  f'{metrics.f1_score:.3f}\n')
+            print(f'\nDebugging2:\naccuracy2: {metrics.accuracy2:.3f}\nprecision2: '
+                  f'{metrics.precision2:.3f}\nrecall2: {metrics.recall2:.3f}\nf1_score2: '
+                  f'{metrics.f1_score2:.3f}\n')
             #
             # Using Scikit-Learn:
+            '''
             metrics.accuracy2 = accuracy_score(y_true, y_pred)
             metrics.accuracy3 = accuracy_score(y_true2, y_pred)
             metrics.precision2 = precision_score(y_true, y_pred)
@@ -672,6 +694,7 @@ class OsirisDetector:
             print(f"  Precision: {metrics.precision3:.3f}")
             print(f"  Recall:    {metrics.recall3:.3f}")
             print(f"  F1-Score:  {metrics.f1_score3:.3f}")
+            '''
 
 
             ### Specificity - TN / (TN + FP)
