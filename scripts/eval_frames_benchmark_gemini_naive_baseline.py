@@ -4,7 +4,6 @@ import os
 import time
 from typing import List, Dict
 import logging
-import traceback
 
 from datasets import load_dataset
 from tqdm import tqdm
@@ -13,7 +12,7 @@ import litellm
 
 load_dotenv()  # Load environment variables from .env file
 
-#sleep_interval = 5  # seconds
+sleep_interval = 5  # seconds
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -78,99 +77,50 @@ def count_tokens(text: str, model_name: str) -> int:
         # Fallback to a rough estimate if litellm fails
         return len(text) // 4
 
-def generate_llm_oracle_prompt(prompt: str, wiki_links: List[str]) -> str:
+def generate_llm_naive_prompt(prompt: str, wiki_links: List[str]) -> str:
     """
-    Generates the oracle LLM prompt with wiki_links for RAG evaluation.
+    Generates the naive LLM prompt without RAG/wiki_links for baseline evaluation.
     """
-    logging.info("Generating oracle prompt with RAG URLs.")
-    return f"Here are the relevant Wikipedia articles:\n{wiki_links}\n\nBased on all the information, answer the query. \n\nQuery: {prompt}\n\n"
+    # For baseline evaluation, we ignore the wiki_links and only use the prompt.
+    logging.info("Generating naive prompt without RAG content for baseline.")
+    return prompt
 
-def get_llm_response(prompt: str, model_name: str, max_tokens: int, temperature: float) -> str:
+def get_llm_response(prompt: str, model_name: str) -> str:
     try:
         response = litellm.completion(
-            model=f"litellm_proxy/{model_name}",
+            #model=f"litellm_proxy/{model_name}",
+            model=model_name,
             messages=[ 
-                {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": prompt}
             ],
             #api_key="halumanage",  # A placeholder key is sufficient for the proxy
-            max_tokens=max_tokens,
-            n=1,
-            stop=None,
-            temperature=temperature,
-            api_key="halumanage",
-            #provider="google",
-            base_url="http://localhost:8000/v1", # Point to your local HaluManage server
-            extra_body={"halumanage_approach": "readurls&memory"}
-            # max_tokens=max_tokens, # Baseline without RAG is created without max token limit
+            api_key=GOOGLE_API_KEY,
+            provider="google",
             # Use lower temperature for factual/reasoning tasks, aligning with mitigation best practices
+            temperature=0.1
         )
-        output_text = response.choices[0].message.content.strip()
+        output_text = response.choices[0].message.content
         return output_text
     except Exception as e:
         logging.error(f"Error getting LLM response: {e}")
         return ""
 
 def evaluate_response(question: str, llm_response: str, ground_truth: str, model_name: str) -> Dict[str, str]:
+    evaluation_prompt = f"""
+    Given the question: {question}
+    The model responded: {llm_response}
+    The correct answer is: {ground_truth}
+    Is the model's response correct? Answer with 'Yes' or 'No', and then explain your reasoning.
+    """
+    evaluation = get_llm_response(evaluation_prompt, model_name)
 
-    evaluation_prompt = f"""===Task===
-    I need your help in evaluating an answer provided by an LLM against a ground
-    truth answer. Your task is to determine if the ground truth answer is present in the LLM's
-    response. Please analyze the provided data and make a decision.
-    ===Instructions===
-    1. Carefully compare the "Predicted Answer" with the "Ground Truth Answer".
-    2. Consider the substance of the answers - look for equivalent information or correct answers.
-    Do not focus on exact wording unless the exact wording is crucial to the meaning.
-    3. Your final decision should be based on whether the meaning and the vital facts of the
-    "Ground Truth Answer" are present in the "Predicted Answer:"
-    ===Input Data===
-    - Question: {question}
-    - Predicted Answer: {llm_response}
-    - Ground Truth Answer: {ground_truth}
-    ===Output Format===
-    Provide your final evaluation in the following format:
-    "Explanation:" (How you made the decision?)
-    "Decision:" ("TRUE" or "FALSE" )
-    Please proceed with the evaluation."""
-    
-    try:
-        logging.info("Invoking LLM as an evaluator (direct call).")
-        response = litellm.completion(
-            model=f"litellm_proxy/{MODEL_NAME}",  # direct model call to the underlying model
-            messages=[
-                {"role": "system", "content": "You are an expert evaluator."},
-                {"role": "user", "content": evaluation_prompt}
-            ],
-            # A dummy api_key is needed for the proxy.
-            api_key="halumanage",
-            base_url="http://localhost:8000/v1", # Point to your local HaluManage server
-            max_tokens=500,
-            temperature=0.3
-        )
-
-        # Safely access response content, works for both object and dict responses
-        evaluation_text = ""
-        if response and hasattr(response, 'choices') and response.choices:
-            if hasattr(response.choices[0], 'message') and hasattr(response.choices[0].message, 'content'):
-                evaluation_text = response.choices[0].message.content.strip()
-
-        if not evaluation_text:
-            logging.error("Could not extract evaluation text from the response.")
-            return {"decision": "ERROR", "explanation": "Empty or invalid response from evaluator."}
-
-        lines = evaluation_text.split('\n')
+    if "Yes" in evaluation:
+        decision = "TRUE"
+    else:
         decision = "FALSE"
-        explanation = ""
-        for line in lines:
-            if line.lower().startswith("decision:"):
-                decision = line.split(":", 1)[1].strip().upper()
-            elif line.lower().startswith("explanation:"):
-                explanation = line.partition(":")[2].strip()
-        return {"decision": decision, "explanation": explanation}
-    except Exception as e:
-        logging.error(f"Error during evaluation: {e}")
-        logging.debug(traceback.format_exc())
-        return {"decision": "ERROR", "explanation": str(e)}
+
+    explanation = evaluation  # The full response is the explanation
+    return {"decision": decision, "explanation": explanation}
 
 def main(model: str):
     # Load the dataset
@@ -182,24 +132,18 @@ def main(model: str):
     total_input_tokens = 0
     total_output_tokens = 0
 
-    # Use the "readurls&memory" option for RAG with URL retrieval. This is a custom setup in HaluManage.
-    #model = f"readurls&memory-{model}"
-
     for item in tqdm(dataset, desc="Processing samples"):
         index = int(item['Unnamed: 0'])
         if index <= last_processed_index:
             continue
 
-        prompt = generate_llm_oracle_prompt(item['Prompt'], item['wiki_links']) # Renamed from generate_llm_prompt
+        prompt = generate_llm_naive_prompt(item['Prompt'], item['wiki_links']) # Renamed from generate_llm_prompt
         
         input_tokens = count_tokens(prompt, MODEL_NAME)
-        logging.info(f"Oracle Prompt Input tokens: {input_tokens}")
+        logging.info(f"Naive Prompt Input tokens: {input_tokens}")
         total_input_tokens += input_tokens
-        max_tokens = 1000   # Not getting used to compare with baseline with out RAG
-        temperature=0.3
 
-        llm_response = get_llm_response(prompt, model, max_tokens, temperature)
-
+        llm_response = get_llm_response(prompt, model)
         output_tokens = count_tokens(llm_response, MODEL_NAME)
         logging.info(f"Output tokens: {output_tokens}")
         total_output_tokens += output_tokens
@@ -217,10 +161,9 @@ def main(model: str):
         }
 
         save_result(filename, result)
-        # print(f"Index: {index}, Decision: {result['evaluation_decision']}")
         # Rate limiting sleep (outside the retry loop)
-        #if sleep_interval > 0:
-        #    time.sleep(sleep_interval)
+        if sleep_interval > 0:
+            time.sleep(sleep_interval)
 
     # Calculate and print summary statistics
     results = load_existing_results(filename)

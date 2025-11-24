@@ -146,7 +146,7 @@ I asked my assistant to read and analyse the above content page by page to help 
 {relevant_info}
 '''
 Read again the note(s), take a deep breath and answer the query.
-{query}  // This is the original_question
+{query}  // Replaced query with original_question
 """}
     ]
 

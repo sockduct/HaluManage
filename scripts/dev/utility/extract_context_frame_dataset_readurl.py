@@ -9,7 +9,9 @@ from tqdm import tqdm
 import logging
 import sys
 import os
+from datetime import datetime
 import argparse
+from typing import List
 
 # Add the project root to the Python path to allow importing from the halumanage package
 # The script is in 'HaluManage/scripts', so we need to go up one level to 'HaluManage' to make the 'halumanage' package importable.
@@ -18,7 +20,9 @@ if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
 # Import the run function from the readurls_plugin
-from utility.readurls_plugin_extract_content import run as run_readurls
+from halumanage.plugins.readurls_plugin import run as run_readurls
+
+
 
 # --- Configuration ---
 #INPUT_CSV_PATH = r'd:\vscworkspace\HaluManage\frames_benchmark_data_test.csv'
@@ -46,14 +50,26 @@ def save_results(filename: str, results: list):
     except Exception as e:
         logging.error(f"Error saving results to JSON: {e}")
 
+def generate_llm_oracle_prompt(prompt: str, wiki_links: List[str]) -> str:
+    """
+    Generates the oracle LLM prompt with wiki_links for RAG evaluation.
+    """
+    logging.info("Generating oracle prompt with RAG URLs.")
+    return f"Here are the relevant Wikipedia articles:\n{wiki_links}\n\nBased on all the information, answer the query. \n\nQuery: {prompt}\n\n"
+
 def main():
     parser = argparse.ArgumentParser(description="Extract context for FRAMES using readurls plugin")
-    parser.add_argument("--input_csv", default=r'd:\vscworkspace\HaluManage\frames_benchmark_dataset.csv', help="Path to input CSV")
-    parser.add_argument("--output_json", default=r'd:\vscworkspace\HaluManage\frames_with_context_readurl_final.json', help="Output JSON path")
+    parser.add_argument("--input_csv", default=r'd:\vscworkspace\HaluManage\frames_benchmark_dataset_test.csv', help="Path to input CSV")
+    parser.add_argument("--output_json", default=r'd:\vscworkspace\HaluManage\frames_with_context_readurl_optillm.json', help="Output JSON path")
     args = parser.parse_args()
 
     input_path = args.input_csv
-    output_path = args.output_json
+    base_output_path = args.output_json
+
+    # Generate a timestamp to append to the output file name
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    name, ext = os.path.splitext(base_output_path)
+    output_path = f"{name}_{timestamp}{ext}"
 
     if not os.path.exists(input_path):
         logging.error(f"Input file not found: {input_path}")
@@ -116,9 +132,12 @@ def main():
                 # Join URLs into a single string to pass to the plugin
                 urls_as_query = " ".join(url_list)
                 
+                # 
+                prompt = generate_llm_oracle_prompt(prompt, wiki_links_str) # Renamed from generate_llm_prompt
+
                 # Use the run function from the plugin to fetch content.
                 # The function returns (new_query, completion_tokens). We only need the new_query.
-                generated_context, _ = run_readurls(system_prompt="", initial_query=urls_as_query)
+                generated_context, _ = run_readurls(system_prompt="", initial_query=prompt)
             else:
                 logging.warning(f"Row {index}: 'wiki_links' is not a list. Skipping.")
             logging.info(f"Processing Question {questionNo} Completes")       
