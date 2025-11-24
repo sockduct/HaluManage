@@ -143,13 +143,14 @@ def main(model: str):
         logging.error("Google Cloud API key not found. Please set the GOOGLE_API_KEY environment variable.")
         exit()
 
-    # Rest of your code...
+    # Load the dataset with full context from local JSON file. This file has been prepared beforehand using utility/readurls_plugin_extract_content.py. 
+    # The file size is large (~114MB) due to the full Wikipedia article contents. So not uploaded to GitHub because of size. 
     json_file_path = os.path.join(project_root, 'frames_with_full_context_readurl_v1.0.json')
     # Load the dataset from the local JSON file
     with open(json_file_path, 'r', encoding='utf-8') as f:
         dataset = json.load(f)
 
-    filename = f"evaluation_results_{model.replace('/', '_')}.json"
+    filename = f"eval_results_{model.replace('/', '_')}_rag_memory.json"
     existing_results = load_existing_results(filename)
     last_processed_index = get_last_processed_index(existing_results)
     total_input_tokens = 0

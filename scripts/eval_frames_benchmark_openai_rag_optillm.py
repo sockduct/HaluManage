@@ -11,10 +11,9 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load environment variables from .env file
 
-#client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"), base_url="http://localhost:8000/v1")
 # HaluManage proxy will read the API key from environment variable.
-client = OpenAI(api_key="halumanage", base_url="http://localhost:8000/v1")
-# client = OpenAI()
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"), base_url="http://localhost:8000/v1")
+MODEL_NAME = "gpt-4o-mini"
 
 def load_existing_results(filename: str) -> List[Dict]:
     try:
@@ -103,7 +102,7 @@ def main(model: str):
     # Load the dataset
     dataset = load_dataset("google/frames-benchmark", split="test")
     
-    filename = f"evaluation_results_{model.replace('/', '_')}.json"
+    filename = f"eval_results_{model.replace('/', '_')}_rag_optillm.json"
     existing_results = load_existing_results(filename)
     last_processed_index = get_last_processed_index(existing_results)
     
@@ -150,7 +149,8 @@ def main(model: str):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate LLM performance on google/frames-benchmark")
-    parser.add_argument("--model", type=str, required=True, help="OpenAI model to use (e.g., gpt-4o, gpt-4o-mini)")
+    parser.add_argument("--model", type=str, default=MODEL_NAME, help="OpenAI model to use (e.g., gpt-4o, gpt-4o-mini)")
+    
     args = parser.parse_args()
     
     main(args.model)

@@ -37,6 +37,7 @@ mcp
 mlx-lm>=0.24.0; platform_machine=="arm64" and sys_platform=="darwin"
 math_verify
 
-# Added by Avinash
+# REQUIRED FOR GOOGLE GEMINI MODEL INVOCATION using LiteLLM / Vertex AI route
 google-auth     # Required to invoke Google model using LiteLLM. To fix - ModuleNotFoundError: No module named 'google.auth' error
 google-cloud-aiplatform # Required to invoke Google Gemma model using LiteLLM / Vertex AI route.
+google.genai # This is required if script is using Google ADK to invoke Gemini model
