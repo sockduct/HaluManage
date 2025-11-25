@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-"""Sample a percentage of results-oracle-Qwen25-with-context.json and save sorted by Index."""
+"""Sample a percentage of a dataset file results and save sorted by Index."""
 
 import argparse
 import json
