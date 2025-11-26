@@ -120,17 +120,13 @@ class Metrics:
 
     # Classification metrics (when ground truth available)
     accuracy: Optional[float] = None # Number of correct predictions / total predictions
-    accuracy2: Optional[float] = None
-    accuracy3: Optional[float] = None
+    accuracy_alt: Optional[float] = None
     precision: Optional[float] = None # Number of true positives / (true positives + false positives)
-    precision2: Optional[float] = None
-    precision3: Optional[float] = None
+    precision_alt: Optional[float] = None
     recall: Optional[float] = None
-    recall2: Optional[float] = None
-    recall3: Optional[float] = None
+    recall_alt: Optional[float] = None
     f1_score: Optional[float] = None
-    f1_score2: Optional[float] = None
-    f1_score3: Optional[float] = None
+    f1_score_alt: Optional[float] = None
     true_positives: Optional[int] = None
     false_positives: Optional[int] = None
     true_negatives: Optional[int] = None
@@ -188,7 +184,7 @@ class InputValidator:
                 errors.append(f"Sample {i}: Missing question/answer")
                 continue
 
-            # Truncate long sequences
+            # Truncate long sequences - Note:  Dealt with in pre-processing
             '''
             if len(question) > MAX_CHARS:
                 print(f'Warning:  Question {i + 1} too long, truncating...')
@@ -612,19 +608,26 @@ class OsirisDetector:
             # y_true = [r.ground_truth for r in gt_results]
             # Not does ground_truth exist, but its value (is it a hallucination
             # or 'FALSE'); in other words the grader says the answer is wrong:
-            y_true = [r.metadata['evaluation_decision'] == 'TRUE' for r in gt_results]
-            y_true2 = [r.metadata['evaluation_decision'] == 'FALSE' for r in gt_results]
+            # y_true = [r.metadata['evaluation_decision'] == 'TRUE' for r in gt_results]
+            # Note:  Two perspectives:
+            # 1) True Positive => Eval_Decision = False (wrong), is_hallucination = True (base)
+            # 2) True Positive => Eval_Decision = True  (right), is_hallucination = False (alt)
+            y_true = [r.metadata['evaluation_decision'] == 'FALSE' for r in gt_results]
             y_pred = [r.is_hallucination for r in gt_results]
 
-            print(f'\nDebugging:\ngt_results#  {len(gt_results)}\ny_true: {y_true}\n'
-                  f'y_true2: {y_true2}\ny_pred: {y_pred}\n')
             '''
+            Base Confusion Matrix:
                                           | Incorrect/Hallucination | Correct/Not a hallucination
             Predicted Hallucination       |   True Positive (TP)    |   False Positive (FP)
             Predicted Not a hallucination |   False Negative (FN)   |   True Negative (TN)
 
             Ground Truth (GT) = Grader assessment of model's answer (True/False)
             Hallucination Prediction (HP) = Osiris model's prediction (True/False)
+
+            Alt Confusion Matrix:
+                                          | Correct/Not a hallucination | Incorrect/Hallucination
+            Predicted Not a hallucination |   True Positive (TP)        |   False Positive (FP)
+            Predicted Hallucination       |   False Negative (FN)       |   True Negative (TN)
             '''
             # True Positive:  GT=False (Wrong answer), HP=True (Hallucination)
             tp = sum(1 for t, p in zip(y_true, y_pred) if not t and p)
@@ -643,6 +646,7 @@ class OsirisDetector:
             metrics.true_negatives = tn
             metrics.false_negatives = fn
 
+            # Base calculations:
             metrics.accuracy = _safe_div(tp + tn, len(gt_results))
             metrics.precision = _safe_div(tp, tp + fp)
             metrics.recall = _safe_div(tp, tp + fn)
@@ -652,52 +656,18 @@ class OsirisDetector:
             )
 
             # Alternate calculations:
-            tp2 = sum(1 for t, p in zip(y_true2, y_pred) if not t and p)
-            fp2 = sum(1 for t, p in zip(y_true2, y_pred) if t and p)
-            tn2 = sum(1 for t, p in zip(y_true2, y_pred) if t and not p)
-            fn2 = sum(1 for t, p in zip(y_true2, y_pred) if not t and not p)
-            metrics.accuracy2 = _safe_div(tp2 + tn2, len(gt_results))
-            metrics.precision2 = _safe_div(tp2, tp2 + fp2)
-            metrics.recall2 = _safe_div(tp2, tp2 + fn2)
-            metrics.f1_score2 = _safe_div(
-                2 * metrics.precision2 * metrics.recall2,
-                metrics.precision2 + metrics.recall2
+            alt_tp = tn
+            alt_tn = tp
+            alt_fp = fn
+            alt_fn = fp
+
+            metrics.accuracy_alt = _safe_div(alt_tp + alt_tn, len(gt_results))
+            metrics.precision_alt = _safe_div(alt_tp, alt_tp + alt_fp)
+            metrics.recall_alt = _safe_div(alt_tp, alt_tp + alt_fn)
+            metrics.f1_score_alt = _safe_div(
+                2 * metrics.precision_alt * metrics.recall_alt,
+                metrics.precision_alt + metrics.recall_alt
             )
-
-            # Debugging:
-            print(f'\nDebugging1:\nTP: {tp}\nFP: {fp}\nTN: {tn}\nFN: {fn}\naccuracy: '
-                  f'{metrics.accuracy:.3f}\nprecision: '
-                  f'{metrics.precision:.3f}\nrecall: {metrics.recall:.3f}\nf1_score: '
-                  f'{metrics.f1_score:.3f}\n')
-            print(f'\nDebugging2:\nTP2: {tp2}\nFP2: {fp2}\nTN2: {tn2}\nFN2: {fn2}\n'
-                  f'accuracy2: {metrics.accuracy2:.3f}\nprecision2: '
-                  f'{metrics.precision2:.3f}\nrecall2: {metrics.recall2:.3f}\nf1_score2: '
-                  f'{metrics.f1_score2:.3f}\n')
-            #
-            # Using Scikit-Learn:
-            '''
-            metrics.accuracy2 = accuracy_score(y_true, y_pred)
-            metrics.accuracy3 = accuracy_score(y_true2, y_pred)
-            metrics.precision2 = precision_score(y_true, y_pred)
-            metrics.precision3 = precision_score(y_true2, y_pred)
-            metrics.recall2 = recall_score(y_true, y_pred)
-            metrics.recall3 = recall_score(y_true2, y_pred)
-            metrics.f1_score2 = f1_score(y_true, y_pred)
-            metrics.f1_score3 = f1_score(y_true2, y_pred)
-
-            print(f'\nDebugging Using Scikit-Learn:')
-            print(f"  Accuracy:  {metrics.accuracy2:.3f}")
-            print(f"  Precision: {metrics.precision2:.3f}")
-            print(f"  Recall:    {metrics.recall2:.3f}")
-            print(f"  F1-Score:  {metrics.f1_score2:.3f}")
-
-            print(f'\nDebugging Using Scikit-Learn Alt:')
-            print(f"  Accuracy:  {metrics.accuracy3:.3f}")
-            print(f"  Precision: {metrics.precision3:.3f}")
-            print(f"  Recall:    {metrics.recall3:.3f}")
-            print(f"  F1-Score:  {metrics.f1_score3:.3f}")
-            '''
-
 
             ### Specificity - TN / (TN + FP)
             ### Precision-recall/ROC curve/ROC-AUC, PR-AUC???
@@ -715,14 +685,27 @@ class OsirisDetector:
         print(f"High Confidence Detections: {m.high_confidence_samples} ({_safe_div(m.high_confidence_samples, m.total_samples):.1%})")
 
         if m.accuracy is not None:
-            print(f"\nDetection Performance (vs Ground Truth):")
+            print(f"\nBase Detection Performance (vs Ground Truth):")
             print(f"  Accuracy:  {m.accuracy:.3f}")
             print(f"  Precision: {m.precision:.3f}")
             print(f"  Recall:    {m.recall:.3f}")
             print(f"  F1-Score:  {m.f1_score:.3f}")
-            print(f"\nConfusion Matrix:")
+            print(f"\nBase Confusion Matrix:")
             print(f"  TP={m.true_positives:<4} FP={m.false_positives:<4}")
             print(f"  FN={m.false_negatives:<4} TN={m.true_negatives:<4}")
+
+            print("-"*80 + "\n")
+
+            print(f"\nAlt Detection Performance (vs Ground Truth):")
+            print(f"  Accuracy:  {m.accuracy_alt:.3f}")
+            print(f"  Precision: {m.precision:_alt.3f}")
+            print(f"  Recall:    {m.recall:_alt.3f}")
+            print(f"  F1-Score:  {m.f1_score:_alt.3f}")
+            print(f"\nAlt Confusion Matrix:")
+            # Note:  alt_tp = tn, alt_tn = tp, alt_fp = fn, alt_fn = fp:
+            print(f"  TP={m.true_negatives:<4} FP={m.false_negatives:<4}")
+            print(f"  FN={m.false_positives:<4} TN={m.true_positives:<4}")
+
 
         print("="*80 + "\n")
 

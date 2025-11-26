@@ -139,7 +139,7 @@ cd scripts/pipeline
 ./eval_frames.py --dataset data/frames_with_context.json --mode oracle --output_file results/results-oracle-FlashLite-FlashLite-final.json --report_file results/results-oracle-FlashLite-FlashLite-final.txt
 ```
 
-### Remove resulting records with answer > 4k tokens
+### Remove resulting records with answer > 4k tokens and empty grades
 
 ```bash
 # Optionally examine Question Output Tokens for records - note most records < 4k:
@@ -150,15 +150,17 @@ Select-String -pattern 'questionoutputtokens' -path 'results\results-oracle-Flas
 egrep -i 'questionoutputtokens' results/results-oracle-FlashLite-FlashLite-final.json | gawk -F ':' '{print $2}' | sed -e 's/^[[:space:]]*//' -e 's/,*$//' | sort -n
 
 # Generate new dataset file with records > 4k removed:
-./filter_results_by_tokens.py --input_file results/results-oracle-FlashLite-FlashLite-final.json --output_file results/results-oracle-FlashLite-FlashLite-final-trunc.json
+# Also purge records where Grader Decision is empty
+./filter_results.py --input_file results/results-oracle-FlashLite-FlashLite-final.json --output_file results/results-oracle-FlashLite-FlashLite-final-trunc.json --prune_empty_grades
 ```
 
 ### Trim/summarize FRAMES dataset to fit within 32k context window supported by Osiris
 
 ```bash
-# Based on optillm/plugins/memory_plugin.py from the OptiLLM repo:
 # We're selecting a target context window of 28k (reserving 4k for model answers
 # to questions) - default input file is data/frames_with_context.json:
+#
+# Based on optillm/plugins/memory_plugin.py from the OptiLLM repo:
 ./trim_record_context.py -l 28
 ```
 
