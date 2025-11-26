@@ -698,9 +698,9 @@ class OsirisDetector:
 
             print(f"\nAlt Detection Performance (vs Ground Truth):")
             print(f"  Accuracy:  {m.accuracy_alt:.3f}")
-            print(f"  Precision: {m.precision:_alt.3f}")
-            print(f"  Recall:    {m.recall:_alt.3f}")
-            print(f"  F1-Score:  {m.f1_score:_alt.3f}")
+            print(f"  Precision: {m.precision_alt:.3f}")
+            print(f"  Recall:    {m.recall_alt:.3f}")
+            print(f"  F1-Score:  {m.f1_score_alt:.3f}")
             print(f"\nAlt Confusion Matrix:")
             # Note:  alt_tp = tn, alt_tn = tp, alt_fp = fn, alt_fn = fp:
             print(f"  TP={m.true_negatives:<4} FP={m.false_negatives:<4}")
