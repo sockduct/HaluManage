@@ -608,11 +608,12 @@ class OsirisDetector:
             # y_true = [r.ground_truth for r in gt_results]
             # Not does ground_truth exist, but its value (is it a hallucination
             # or 'FALSE'); in other words the grader says the answer is wrong:
-            # y_true = [r.metadata['evaluation_decision'] == 'TRUE' for r in gt_results]
+            y_true = [r.metadata['evaluation_decision'] == 'TRUE' for r in gt_results]
+            # Could use this instead but handled in TP/FP/FN/TN calculations:
+            # y_true = [r.metadata['evaluation_decision'] == 'FALSE' for r in gt_results]
             # Note:  Two perspectives:
             # 1) True Positive => Eval_Decision = False (wrong), is_hallucination = True (base)
             # 2) True Positive => Eval_Decision = True  (right), is_hallucination = False (alt)
-            y_true = [r.metadata['evaluation_decision'] == 'FALSE' for r in gt_results]
             y_pred = [r.is_hallucination for r in gt_results]
 
             '''
