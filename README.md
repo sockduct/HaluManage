@@ -102,12 +102,13 @@ cd scripts/pipeline
 
 # For example:
 ./getdata.py -h
-
-# Note on running Python scripts
-* These scripts were tested from PowerShell and Windows and bash on Linux
-* If you have trouble running the scripts like this:  `./script.py`, then try `python script.py`
-* Ensure you are using Python 3.12 when you run the scripts
 ```
+
+### Note on running Python scripts
+
+* These scripts were tested from PowerShell on Windows and bash on Linux
+* If you have trouble running the scripts like this: `./script.py` try: `python script.py`
+* Ensure you are using Python 3.12 when you run the scripts
 
 ### Retrieve FRAMES dataset from Hugging Face
 
