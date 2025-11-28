@@ -102,6 +102,11 @@ cd scripts/pipeline
 
 # For example:
 ./getdata.py -h
+
+# Note on running Python scripts
+* These scripts were tested from PowerShell and Windows and bash on Linux
+* If you have trouble running the scripts like this:  `./script.py`, then try `python script.py`
+* Ensure you are using Python 3.12 when you run the scripts
 ```
 
 ### Retrieve FRAMES dataset from Hugging Face
@@ -121,6 +126,21 @@ cd scripts/pipeline
 #
 # Note:  This is based on optillm/plugins/readurls_plugin.py from the OptiLLM repo:
 ./fetch_urls.py
+```
+
+### Processing a dataset with a model (LLM) - Requirements
+
+* The eval_frames.py script uses [Open Router](https://openrouter.ai/docs/quickstart) to provide API access to hosted LLMs (models)
+* You will need to [purchase Open Router API credits](https://openrouter.ai/settings/credits?ref=pricing-table-payg) to run this script
+* In the directory where the eval_frames.py script is located, create an .env file with your API key:
+
+```bash
+OPENROUTER_API_KEY=sk-or-v1-sdlfkjslfksdjf...
+```
+
+```bash
+# Test run to validate OPEN ROUTER API Key:
+./eval_frames.py -l 1
 ```
 
 ### Process FRAMES dataset with naive prompting approach
