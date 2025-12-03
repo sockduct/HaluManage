@@ -157,6 +157,13 @@ OPENROUTER_API_KEY=sk-or-v1-sdlfkjslfksdjf...
 # Ask question to model supplying all referenced Wikipedia articles (so called
 # oracle prompt) and instruct model to use chain-of-thought reasoning to reach
 # answer.
+#
+# Notes:
+# * To use the non-chain-of-thought Oracle prompt, the script must be manually
+#   edited. The process_question function must be altered where it calls ask_1q
+#   to use "ORACLE_Q_PROMPT" instead of "ORACLE_Q2_PROMPT".
+# * To use the chain-of-thought Oracle prompt, the script's process_question
+#   function needs to call ask_1q with "ORACLE_Q2_PROMPT".
 ./eval_frames.py --dataset data/frames_with_context.json --mode oracle --output_file results/results-oracle-FlashLite-FlashLite-final.json --report_file results/results-oracle-FlashLite-FlashLite-final.txt
 ```
 
